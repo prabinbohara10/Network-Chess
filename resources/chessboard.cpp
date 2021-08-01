@@ -1,6 +1,6 @@
 #include "chessboard.h"
 
-
+//comment
 void chessboard::set_piece_to_board(RenderWindow& window,int (&board)[8][8],RectangleShape(&square)[8][8],Texture& tex,Sprite& sp)
 {
 	for (int i = 0; i < row; i++)
@@ -11,6 +11,7 @@ void chessboard::set_piece_to_board(RenderWindow& window,int (&board)[8][8],Rect
 
 			if (n != 0)
 			{
+		
 				//for setting the pieces according to the board 2D matrix
 				switch (n)
 				{
