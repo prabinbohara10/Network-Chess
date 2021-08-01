@@ -1,5 +1,5 @@
 #include "king.h"
-
+//prabin bohara changed
 void king::showpath(RenderWindow& window, int(&board)[8][8],RectangleShape (&square)[8][8],int row,int col,
 		int piece,vector<vector<int>> &current_possible,int current_side)
 {
