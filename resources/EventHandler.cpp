@@ -1,22 +1,28 @@
 #include"EventHandler.h"
 //passing game window, game_array and base squares:
-   void EventHandler:: event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8],int (&clicked_square)[2])
+   void EventHandler:: event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8])
    {
-	   while (window.pollEvent(event1)) {
 
+	   //checking special cases i.e. special movements:
+			// 1)castling  2)En passant 3)Check  4)Checkmate  5)
+
+
+		//any event is triggered:
+	    while (window.pollEvent(event1)) {
+
+		   //checking window close event both by mouse click and keyboard press:
 		   	if (event1.type == Event::Closed)
 				window.close();
-
-
 			if (event1.type == Event::KeyPressed && event1.key.code == Keyboard::Escape)
 				window.close();
+			
+			
+			 
 
+		   //mouse pressed event start:
 		   if(event1.type==Event::MouseButtonPressed && event1.mouseButton.button==Mouse::Left)
 		   {
             
-			
-
-			
 			//getting x and y when mouse is clicked:
 			int x = Mouse::getPosition(window).x;
 			int y = Mouse::getPosition(window).y;
@@ -26,45 +32,24 @@
 			{
 				row_no = y / 80;
 				col_no = x / 80;
+				clicked_piece = game_array[row_no][col_no];
 
-			// //checks if the pevious mouse pressed and present are same.
-			// //to prevent mulitple calling of mousePressed function;
-			// if(clicked_square[0]==row_no  && clicked_square[1]==col_no)
-			// {
 
-			// }
-			// else
-			// {
-			 clicked_square[0]=row_no;
-			 clicked_square[1]=col_no;
-			 
-			
-			clicked_piece = game_array[row_no][col_no];
 			int need_to_show_possible_moves=1;// 1 to show possible moves form the clicked position:
 											   // 0 is not to show possible moves from clicked postion:
 
-			//to check if the clicked_square is present in the current_possible vector:
-			if(current_possible.size()>1)
+			//if move is successful:
+			int move_flag= movement1.is_move_success(window,square,game_array,current_possible,current_side_to_play,row_no, col_no);
+			if(move_flag)
+			 return;
+
+			//checking of white moves in white turn and black moves in black turn:	
+			if((current_side_to_play==0 && clicked_piece>=0) || (current_side_to_play==1 && clicked_piece<=0))
 			{
-				for(int i=1;i<current_possible.size();i++)
-				{
-				  if(current_possible[i][0]==row_no && current_possible[i][1]==col_no)
-					{
-							need_to_show_possible_moves=0;
-							int parent_row=current_possible[0][0];
-							int parent_col=current_possible[0][1];
-							game_array[parent_row][parent_col]=0;
-							game_array[row_no][col_no]=current_possible[0][2];
-					}
-					
-				}
-			}
-			//to remove all elemets of vector 
-			 //	:either it finds possible moves or not:
-			 current_possible.clear();
-				cout<<" sier " <<current_possible.size();
+
 			
-				window.clear();//reset everything by clering window:
+			
+				window.clear();//reset everything by clering window to make different colour for possible moves:
 				
 				c1.draw_baseboard(window,square);//making baseboard so that other color can fit above this baseboard.
 												 //This has initial color black and white.
@@ -91,16 +76,11 @@
 				//call the showpath(possible path) function for respective pieces:
 				if (clicked_piece == -6 || clicked_piece == 6) //black or white pawn
 				{
-					
-					
-					p1.showpath(window, game_array, square, row_no, col_no, clicked_piece,current_possible);
-					
-
+					p1.showpath(window, game_array, square, row_no, col_no, clicked_piece,current_possible,current_side_to_play);
 				}
 				else if (clicked_piece == 1 || clicked_piece == -1)
 				{
 					r1.showpath(window, game_array, square, row_no, col_no, clicked_piece,current_possible);
-
 				}
 				else if (clicked_piece == -2 || clicked_piece == 2)
 				{
@@ -116,18 +96,25 @@
 				}
 				else if (clicked_piece == 5 || clicked_piece == -5)
 				{
-					k1.showpath(window, game_array, square, row_no, col_no, clicked_piece,current_possible);
+					k1.showpath(window, game_array, square, row_no, col_no, clicked_piece,current_possible,current_side_to_play);
 				}
 				else
 				{
-					std::cout<<"Invalid piece";
+					//std::cout<<"Invalid piece";
 				}
 
 				}//checks if need_to_show_possible_moves:
+
+			
+				
+				// placing pieces to the board. making baseboard is already done before.
+				//Why making baseboard function is above?
+				//just to draw different colours to the squares of possible moves:
 				c1.set_piece_to_board(window, game_array,square, tex, sp);
 
 			window.display();
 			//else part of "if clicked is on same square:"
+			}//end of if (checking if white moves in white turn and black in black turn)
 
 				
 

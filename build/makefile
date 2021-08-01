@@ -6,15 +6,18 @@ EVENTHANDLER=../resources/eventhandler.cpp
 KING=../resources/king.cpp
 KNIGHT=../resources/knight.cpp
 MAIN=../resources/main.cpp
+MOVEMENT=../resources/movement.cpp
 PAWN=../resources/pawn.cpp
 PIECE=../resources/piece.cpp
 QUEEN=../resources/queen.cpp
 ROOK=../resources/rook.cpp
 
+
+
 all: compile link
 
 compile:
-	$(COMPILER) -I ../src/include -c $(BISHOP) $(CHESSBOARD) $(EVENTHANDLER) $(KING) $(KNIGHT) $(MAIN) $(PAWN) $(PIECE) $(QUEEN) $(ROOK)
+	$(COMPILER) -I ../src/include -c $(BISHOP) $(CHESSBOARD) $(EVENTHANDLER) $(KING) $(KNIGHT) $(MAIN) $(MOVEMENT) $(PAWN) $(PIECE) $(QUEEN) $(ROOK)
 
 link:
-	$(COMPILER) bishop.o chessboard.o eventhandler.o king.o knight.o main.o pawn.o piece.o queen.o rook.o -o main -L ../src/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
+	$(COMPILER) bishop.o chessboard.o eventhandler.o king.o knight.o main.o movement.o pawn.o piece.o queen.o rook.o -o main -L ../src/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network

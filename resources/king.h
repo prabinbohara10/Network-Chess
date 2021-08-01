@@ -19,6 +19,6 @@ class king
 	int can_kill;
 public:
 	void showpath(RenderWindow& window, int(&board)[8][8],RectangleShape (&square)[8][8],int row,int col,
-		int piece,vector<vector<int>> &current_possible);
+		int piece,vector<vector<int>> &current_possible,int current_side);
 };
 

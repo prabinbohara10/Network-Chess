@@ -12,10 +12,16 @@
 #include "queen.h"
 #include "king.h"
 #include "knight.h"
+#include"movement.h"
 using namespace sf;
+
+
+//GLOBAL ENTITIES:	
+
 
 class EventHandler
 {
+	int current_side_to_play=0;//0 for white and 1 for black:
     int clicked_piece;//to know clicked piece
     int row_no,col_no; //to know location of clicked piece:
     chessboard c1;
@@ -25,23 +31,25 @@ class EventHandler
 	bishop b1;
 	queen q1;
 	king k1;
-
+    
+	movement movement1;
 	Texture tex;//to display pieces:
 	Sprite sp;
 
 	vector<vector<int>> current_possible;//to store the information of all possible moves of particular piece:
 	
     Event event1;
+	 
+
+
+	
 		
-
-
-
 public:
-   
-
+    
+	
 
    //passing game window, game_array and base squares:
-   void event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8],int (&clicked_square)[2]);
+   void event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8]);
    
     
 

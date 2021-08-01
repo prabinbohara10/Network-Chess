@@ -1,8 +1,9 @@
 #include "pawn.h"
 
 void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&square)[8][8], int row,
-  int col, int piece, vector<vector<int>> &current_possible)
+  int col, int piece, vector<vector<int>> &current_possible,int &current_side)
 {
+	piece1.is_en_passant(square,board,current_possible,current_side,row,col);
 	if (piece == 6) //if white pawn:
 	{
 		if (row == 6) //if white pawn is in second rank:
@@ -11,15 +12,12 @@ void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&squ
 			{
 				if (board[row - i][col] == 0) {
 					square[row - i][col].setFillColor(Color::Cyan);
-
-					piece1.copy_to_2dvector(current_possible,row-i,col,0);
+					
+					piece1.copy_to_2dvector(square,current_possible,row-i,col,0,0);
 					window.draw(square[row - i][col]);
 				}
 				else
 					break;
-
-
-
 			}
 		}
 		else {
@@ -28,7 +26,7 @@ void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&squ
 				if (board[row - i][col] == 0) {
 
 					square[row - i][col].setFillColor(Color::Cyan);
-					piece1.copy_to_2dvector(current_possible,row-i,col,0);
+					piece1.copy_to_2dvector(square,current_possible,row-i,col,0,0);
 					window.draw(square[row - i][col]);
 				}
 
@@ -43,7 +41,7 @@ void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&squ
 			if (board[row - 1][col - 1] < 0 && (row - 1) >= 0 && (col - 1) >= 0)
 			{
 				square[row - 1][col - 1].setFillColor(Color::Red);
-				piece1.copy_to_2dvector(current_possible,row-1,col-1,1);
+				piece1.copy_to_2dvector(square,current_possible,row-1,col-1,1,0);
 				window.draw(square[row - 1][col - 1]);
 			}
 
@@ -51,7 +49,7 @@ void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&squ
 			if (board[row - 1][col + 1] < 0 && (row - 1) >= 0 && (col + 1) <= 7)
 			{
 				square[row - 1][col + 1].setFillColor(Color::Red);
-				piece1.copy_to_2dvector(current_possible,row-1,col+1,1);
+				piece1.copy_to_2dvector(square,current_possible,row-1,col+1,1,0);
 				window.draw(square[row - 1][col + 1]);
 
 			}
@@ -71,7 +69,7 @@ void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&squ
 				if (board[row + i][col] == 0) {
 
 					square[row + i][col].setFillColor(Color::Cyan);
-					piece1.copy_to_2dvector(current_possible,row+i,col,0);
+					piece1.copy_to_2dvector(square,current_possible,row+i,col,0,0);
 					window.draw(square[row + i][col]);
 				}
 				else
@@ -87,7 +85,7 @@ void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&squ
 				if (board[row + i][col] == 0) {
 
 					square[row + i][col].setFillColor(Color::Cyan);
-					piece1.copy_to_2dvector(current_possible,row+i,col,1);
+					piece1.copy_to_2dvector(square,current_possible,row+i,col,0,0);
 					window.draw(square[row + i][col]);
 				}
 
@@ -100,7 +98,7 @@ void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&squ
 			if (board[row + 1][col - 1] > 0 && (row + 1) <= 7 && (col - 1) >= 0)
 			{
 				square[row + 1][col - 1].setFillColor(Color::Red);
-				piece1.copy_to_2dvector(current_possible,row+1,col-1,1);
+				piece1.copy_to_2dvector(square,current_possible,row+1,col-1,1,0);
 				window.draw(square[row + 1][col - 1]);
 			}
 
@@ -108,7 +106,7 @@ void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&squ
 			if (board[row + 1][col + 1] > 0 && (row + 1) <= 7 && (col + 1) <= 7)
 			{
 				square[row + 1][col + 1].setFillColor(Color::Red);
-				piece1.copy_to_2dvector(current_possible,row+1,col+1,1);
+				piece1.copy_to_2dvector(square,current_possible,row+1,col+1,1,0);
 				window.draw(square[row + 1][col + 1]);
 
 			}
@@ -118,6 +116,24 @@ void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&squ
 
 		
 	}
+	
+	//drawing all current possible:
+		bool first=true;//to skip first since first contains the parent square:
+		for(vector<int> each_possible:current_possible)
+		{
+			int row=each_possible[0];
+			int col=each_possible[1];
+			int can_kill=each_possible[2];
+			if(first)
+			{
+				first=false;
+			}
+			else
+			{
+			window.draw(square[row][col]);
+			}
+			
+		}
 	
 }
 

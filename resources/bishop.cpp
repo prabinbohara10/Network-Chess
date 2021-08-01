@@ -14,7 +14,7 @@ void bishop::showpath(RenderWindow& window, int(&board)[8][8],RectangleShape (&s
 				{
 					square[new_row][new_col].setFillColor(Color::Cyan);
 					window.draw(square[new_row][new_col]);
-					piece1.copy_to_2dvector(current_possible,new_row,new_col,0);
+					piece1.copy_to_2dvector(square,current_possible,new_row,new_col,0,0);
 				}
 				else if((board[new_row] [new_col])>0) //finds white piece:
 				{
@@ -22,7 +22,7 @@ void bishop::showpath(RenderWindow& window, int(&board)[8][8],RectangleShape (&s
 					 {
 						 square[new_row][new_col].setFillColor(Color::Red);
 						 window.draw(square[new_row][new_col]);
-						 piece1.copy_to_2dvector(current_possible,new_row,new_col,1);
+						 piece1.copy_to_2dvector(square,current_possible,new_row,new_col,1,0);
 					 }
 					 break;
 				}
@@ -32,7 +32,7 @@ void bishop::showpath(RenderWindow& window, int(&board)[8][8],RectangleShape (&s
 					 {
 						 square[new_row][new_col].setFillColor(Color::Red);
 						 window.draw(square[new_row][new_col]);
-						 piece1.copy_to_2dvector(current_possible,new_row,new_col,1);
+						 piece1.copy_to_2dvector(square,current_possible,new_row,new_col,1,0);
 					 }
 					 break;
 				}

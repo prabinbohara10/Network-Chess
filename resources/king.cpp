@@ -1,9 +1,11 @@
 #include "king.h"
 
 void king::showpath(RenderWindow& window, int(&board)[8][8],RectangleShape (&square)[8][8],int row,int col,
-		int piece,vector<vector<int>> &current_possible)
+		int piece,vector<vector<int>> &current_possible,int current_side)
 {
-	if (piece == 5 || piece == -5) {
+	if (piece == 5 || piece == -5) 
+	{
+		int a=piece1.is_king_castling_possible(square,board,current_possible,current_side);
 		for(pair<int,int> step_dir:step_direction)
 		{
 			int new_row= row + step_dir.first;
@@ -13,30 +15,50 @@ void king::showpath(RenderWindow& window, int(&board)[8][8],RectangleShape (&squ
 			{
 				if ((board[new_row] [new_col]) == 0 )
 				{
-					square[new_row][new_col].setFillColor(Color::Cyan);
-					piece1.copy_to_2dvector(current_possible,new_row,new_col, 0);
+					
+					piece1.copy_to_2dvector(square,current_possible,new_row,new_col, 0 ,0);
 				}
 				else if((board[new_row] [new_col])>0) //finds white piece:
 				{
 					if (piece==-5) //if passed sqaure contins black king:
 					 {
-						 square[new_row][new_col].setFillColor(Color::Red);
-						 piece1.copy_to_2dvector(current_possible,new_row,new_col, 1);
+					
+						 piece1.copy_to_2dvector(square,current_possible,new_row,new_col, 1,0);
 					 }
 				}
 				else if((board[new_row] [new_col])<0)//finds black piece:
 				{
 					if (piece==5) //if passed sqaure contins white king:
 					 {
-						 square[new_row][new_col].setFillColor(Color::Red);
-						 piece1.copy_to_2dvector(current_possible,new_row,new_col, 1);
+						 
+						 piece1.copy_to_2dvector(square,current_possible,new_row,new_col, 1,0);
 					 }
 				}
 				else{}
-				window.draw(square[new_row][new_col]);
+				
 				
 			}
 		}
+		
+		//drawing all current possible:
+		bool first=true;//to skip first since first contains the parent square:
+		for(vector<int> each_possible:current_possible)
+		{
+			int row=each_possible[0];
+			int col=each_possible[1];
+			int can_kill=each_possible[2];
+			if(first)
+			{
+				first=false;
+			}
+			else
+			{
+			window.draw(square[row][col]);
+			}
+			
+		}
+		
+
 	}
 }
 		
