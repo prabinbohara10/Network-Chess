@@ -64,7 +64,23 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 			//to remove all elemets of vector 
 			 //	:either it finds possible moves or not:
 			 current_possible.clear();
-             return 0; //move not successful:
+			 
+			if(current_side==0 && game_array[current_row][current_col]<0) //black click detected:
+             {
+			window.clear();
+			c1.draw_baseboard(window,square);
+			c1.set_piece_to_board(window, game_array,square, tex, sp);
+				 return 1; //move not successful:
+			 }
+			 else if(current_side==1 && game_array[current_row][current_col]>0) //white click detected:
+             {
+			window.clear();
+			c1.draw_baseboard(window,square);
+			c1.set_piece_to_board(window, game_array,square, tex, sp);
+				 return 1; //move not successful:
+			 }
+			 else
+			  return 0;
 }
 
 //possible en passant:
