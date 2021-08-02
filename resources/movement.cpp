@@ -55,7 +55,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							window.clear();
 							c1.draw_baseboard(window,square);
 							c1.set_piece_to_board(window, game_array,square, tex, sp);
-							window.display();
+							
 							return 1;
 					}
 					

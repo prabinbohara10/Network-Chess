@@ -13,6 +13,8 @@
 #include "king.h"
 #include "knight.h"
 #include"movement.h"
+#include"startmenu.h"
+
 using namespace sf;
 
 
@@ -50,6 +52,8 @@ public:
 
    //passing game window, game_array and base squares:
    void event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8]);
+
+   void gamesidescreen(RenderWindow &window,int x, int y);
    
     
 
