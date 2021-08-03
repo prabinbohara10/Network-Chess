@@ -16,9 +16,22 @@ extern int en_passant_possible_arr[4];
 extern int mouse_pos_x;
 extern int mouse_pos_y;
 
+extern	bool w_check;
+extern  bool b_check;
+
 class movement
 {
     private:
+
+        vector <pair<int,int>> king_direction={ 
+		{-1,-1},{-1,0},{-1,1},
+		{0,-1},    {0,1},
+		{1,-1},{1,0},{1,1},
+        {-2,-1},{-2,1},
+		{-1,2},{1,2},
+		{2,1},{2,-1},
+		{1,-2},{-1,-2}
+	    };
         Texture tex;
         Sprite sp;
         chessboard c1;
@@ -28,4 +41,5 @@ class movement
         vector<vector<int>> &current_possible,int &current_side, int current_row,int current_col);
 
         void possible_en_passant(int(&game_array)[8][8],vector<vector<int>> &current_possible,int moved_index);
+        void find_check(int(&game_array)[8][8],RenderWindow (&window),RectangleShape (&square)[8][8]);
 };

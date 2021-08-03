@@ -1,5 +1,8 @@
 #include "movement.h"
 
+bool w_check=false;
+bool b_check=false;
+
 int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8][8],int(&game_array)[8][8],
         vector<vector<int>> &current_possible, int &current_side,int current_row,int current_col)
 {
@@ -149,6 +152,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 			window.clear();
 			c1.draw_baseboard(window,square);
 			c1.set_piece_to_board(window, game_array,square, tex, sp);
+			find_check(game_array,window,square);
 				 return 1; //move not successful:
 			 }
 			 else
@@ -189,3 +193,188 @@ void movement::possible_en_passant(int(&game_array)[8][8],vector<vector<int>> &c
 		en_passant_possible_arr[3]=current_piece_moved;
 	}
 }
+
+
+
+
+
+void movement :: find_check(int(&game_array)[8][8],RenderWindow (&window),RectangleShape (&square)[8][8]){
+	int b_row,b_col,w_row,w_col,king_no,a,b,row,col;
+	b_row=b_col=w_row=w_col=-1;    //for checking where is king 
+	w_check=false;
+    b_check=false;
+	for(int i=0;i<8;i++){
+		for(int j=0;j<8;j++){
+			if(game_array[i][j]==-5){
+				b_row=i;
+				b_col=j;
+			}
+			 if(game_array[i][j]==5){
+				w_row=i;
+				w_col=j;
+			}
+			//if(b_col!=-1 && b_row !=-1 && w_row!=-1 && w_col!=-1)
+			//break;
+		}//ending of 1st for loop
+	}// ending of 2nd for loop
+	
+
+		for(pair<int,int> king_dir: king_direction)
+		{
+			int new_row= b_row+ king_dir.first;
+			int new_col= b_col+ king_dir.second;
+			a= king_dir.first; b=king_dir.second;
+			while( (new_row>=0)&& (new_col>=0) && (new_row<=7) && (new_col<=7) )
+			{
+
+				 if(game_array[new_row][new_col]>0) //finds white piece
+				{
+
+					
+						//for rook
+						if(game_array[new_row][new_col]==1){
+							if((a==-1 && b==0) || (a==0 && b==-1) || (a==0 && b==1) || (a==1 && b==0)){
+								b_check=true;
+							}
+						}//ending of rook
+
+						//for bishop
+						if(game_array[new_row][new_col]==3){
+							if((a==-1 && b==-1) || (a==-1 && b==1) || (a==1 && b==-1) || (a==1 && b==1)){
+								b_check=true;
+							}
+						}    //ending of bishop
+
+						//for queen
+						if(game_array[new_row][new_col]==4){
+							if((a==-1 && b==0) || (a==0 && b==-1) || (a==0 && b==1) || (a==1 && b==0) ||
+							    (a==-1 && b==-1) || (a==-1 && b==1) || (a==1 && b==-1) || (a==1 && b==1)){
+								b_check=true;
+							}
+						}//ending of queen
+
+						//for knight
+						if(game_array[new_row][new_col]==2){
+							if((a==-2 && b==-1) || (a==-2 && b==1) || (a==-1 && b==2) || (a==1 && b==2) ||
+							    (a==2 && b==1) || (a==2 && b==-1) || (a==1 && b==-2) || (a==-1 && b==2)){
+								b_check=true;
+							}
+						}//ending of knight
+
+						//for pawn
+						if(game_array[new_row][new_col]==6){
+							if((new_row==b_row+1 && new_col==b_col-1) ||(new_row==b_row+1 && new_col==b_col+1)){
+								b_check=true;
+							}
+						}//ending of pawn 
+
+
+					
+					break;
+
+				}
+				//aafnai goti raicha vney break vara new pair liney
+				if(game_array[new_row][new_col]<0){
+					break;}
+					//knight ko auta side check grya paxi break vara new pairs ma janey
+				if((a==-2 && b==-1) || (a==-2 && b==1) || (a==-1 && b==2) || (a==1 && b==2) ||
+							    (a==2 && b==1) || (a==2 && b==-1) || (a==1 && b==-2) || (a==-1 && b==2)){
+								break;
+							}	
+
+
+				new_row+=king_dir.first;
+				new_col+=king_dir.second;
+			}//end of while loop:
+		}   //end for black king check checking
+
+		king_no=5;    //at 2nd lets take white king
+		//loop for checking if the white king is checked
+		for(pair<int,int> king_dir: king_direction)
+		{
+			int new_row= w_row+ king_dir.first;
+			int new_col= w_col+ king_dir.second;
+			a= king_dir.first; b=king_dir.second;
+			while( (new_row>=0)&& (new_col>=0) && (new_row<=7) && (new_col<=7) )
+			{
+
+
+				 if(game_array[new_row][new_col]<0) //finds black piece 
+				{
+					
+						//rook
+						if(game_array[new_row][new_col]==-1){
+							if((a==-1 && b==0) || (a==0 && b==-1) || (a==0 && b==1) || (a==1 && b==0)){
+								w_check=true;
+							}
+						}   //ending of rook
+
+						//bishop
+						if(game_array[new_row][new_col]==-3){
+							if((a==-1 && b==-1) || (a==-1 && b==1) || (a==1 && b==-1) || (a==1 && b==1)){
+								w_check=true;
+							}
+						}    //ending of bishop
+
+						//for queen
+						if(game_array[new_row][new_col]==-4){
+							if((a==-1 && b==0) || (a==0 && b==-1) || (a==0 && b==1) || (a==1 && b==0) ||
+							    (a==-1 && b==-1) || (a==-1 && b==1) || (a==1 && b==-1) || (a==1 && b==1)){
+								w_check=true;
+							}
+						}//ending of queen
+
+						//for knight
+						if(game_array[new_row][new_col]==-2){
+							if((a==-2 && b==-1) || (a==-2 && b==1) || (a==-1 && b==2) || (a==1 && b==2) ||
+							    (a==2 && b==1) || (a==2 && b==-1) || (a==1 && b==-2) || (a==-1 && b==2)){
+								w_check=true;
+							}
+						}//ending of knight
+
+						
+						//for pawn
+						if(game_array[new_row][new_col]==-6){
+							if( (new_row==w_row-1 && new_col==w_col-1) ||(new_row==w_row-1 && new_col==w_col+1)){
+								w_check=true;
+							}
+						}//ending of pawn
+					
+					break;
+				}
+
+				//aafnai goti raicha vney break vara new pair liney
+				if(game_array[new_row][new_col]>0){
+					break;}
+					//knight ko auta side check grya paxi break vara new pairs ma janey
+				if((a==-2 && b==-1) || (a==-2 && b==1) || (a==-1 && b==2) || (a==1 && b==2) ||
+							    (a==2 && b==1) || (a==2 && b==-1) || (a==1 && b==-2) || (a==-1 && b==2)){
+								break;
+							}	
+
+
+				new_row+=king_dir.first;
+				new_col+=king_dir.second;
+			}//end of while loop:
+
+
+		}//end for white king check checking
+
+
+		
+	window.clear();
+	c1.draw_baseboard(window,square);
+	if(b_check==true ){
+		square[b_row][b_col].setFillColor(Color::Red);
+		window.draw(square[b_row][b_col]);
+	}
+	if(w_check==true){
+		square[w_row][w_col].setFillColor(Color::Red);
+		window.draw(square[w_row][w_col]);
+	}
+
+
+	c1.set_piece_to_board(window, game_array,square, tex, sp);
+	window.display();
+
+}  //ending of this function 
