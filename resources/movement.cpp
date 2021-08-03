@@ -18,31 +18,32 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							int parent_col=current_possible[0][1];
 							//game_array[parent_row][parent_col]=0;
 							//game_array[current_row][current_col]=current_possible[0][2];
+							
 							//if move is promotion
 							if ((game_array[parent_row][parent_col]==6 && current_row==0) || (game_array[parent_row][parent_col]==-6 && current_row==7 ))
 							{
 
-								int i = current_col;
-								int j = current_row;
+								int a = current_col;
+								int b = current_row;
 								if(game_array[parent_row][parent_col]==6 && current_row==0)
 								{
 
 									//std::cout<<"yes"<<std::endl;
 
-										if(mouse_pos_x>(i*80) && mouse_pos_x<(i*80+60*0.65) && mouse_pos_y>(j*80) && mouse_pos_y<(j*80+60*0.65))
+										if(mouse_pos_x>(a*80) && mouse_pos_x<(a*80+60*0.65) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
 										{
 											game_array[current_row][current_col]=1;
 
 										}
-										else if(mouse_pos_x>(i*80+60*0.65) && mouse_pos_x<(i*80+60*0.65*2) && mouse_pos_y>(j*80) && mouse_pos_y<(j*80+60*0.65))
+										else if(mouse_pos_x>(a*80+60*0.65) && mouse_pos_x<(a*80+60*0.65*2) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
 										{
 											game_array[current_row][current_col]=2;
 										}
-										else if(mouse_pos_x>(i*80) && mouse_pos_x<(i*80+60*0.65) && mouse_pos_y>(j*80+60*0.65) && mouse_pos_y<(j*80+60*0.65*2))
+										else if(mouse_pos_x>(a*80) && mouse_pos_x<(a*80+60*0.65) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
 										{
 											game_array[current_row][current_col]=3;
 										}
-										else if(mouse_pos_x>(i*80+60*0.65) && mouse_pos_x<(i*80+60*0.65*2) && mouse_pos_y>(j*80+60*0.65) && mouse_pos_y<(j*80+60*0.65*2))
+										else if(mouse_pos_x>(a*80+60*0.65) && mouse_pos_x<(a*80+60*0.65*2) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
 										{
 											game_array[current_row][current_col]=4;
 										}
@@ -57,20 +58,20 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 
 									//std::cout<<"yes"<<std::endl;
 
-										if(mouse_pos_x>(i*80) && mouse_pos_x<(i*80+60*0.65) && mouse_pos_y>(j*80) && mouse_pos_y<(j*80+60*0.65))
+										if(mouse_pos_x>(a*80) && mouse_pos_x<(a*80+60*0.65) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
 										{
 											game_array[current_row][current_col]=-1;
 
 										}
-										else if(mouse_pos_x>(i*80+60*0.65) && mouse_pos_x<(i*80+60*0.65*2) && mouse_pos_y>(j*80) && mouse_pos_y<(j*80+60*0.65))
+										else if(mouse_pos_x>(a*80+60*0.65) && mouse_pos_x<(a*80+60*0.65*2) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
 										{
 											game_array[current_row][current_col]=-2;
 										}
-										else if(mouse_pos_x>(i*80) && mouse_pos_x<(i*80+60*0.65) && mouse_pos_y>(j*80+60*0.65) && mouse_pos_y<(j*80+60*0.65*2))
+										else if(mouse_pos_x>(a*80) && mouse_pos_x<(a*80+60*0.65) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
 										{
 											game_array[current_row][current_col]=-3;
 										}
-										else if(mouse_pos_x>(i*80+60*0.65) && mouse_pos_x<(i*80+60*0.65*2) && mouse_pos_y>(j*80+60*0.65) && mouse_pos_y<(j*80+60*0.65*2))
+										else if(mouse_pos_x>(a*80+60*0.65) && mouse_pos_x<(a*80+60*0.65*2) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
 										{
 											game_array[current_row][current_col]=-4;
 										}
@@ -79,9 +80,6 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 
 
 								}
-
-
-
 
 							}
 							else
@@ -130,7 +128,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							window.clear();
 							c1.draw_baseboard(window,square);
 							c1.set_piece_to_board(window, game_array,square, tex, sp);
-							
+							find_check(game_array,window,square);
 							return 1;
 					}
 					
@@ -138,7 +136,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 			}
 			//to remove all elemets of vector 
 			 //	:either it finds possible moves or not:
-			 current_possible.clear();
+			current_possible.clear();
 			 
 			if(current_side==0 && game_array[current_row][current_col]<0) //black click detected:
              {
@@ -152,7 +150,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 			window.clear();
 			c1.draw_baseboard(window,square);
 			c1.set_piece_to_board(window, game_array,square, tex, sp);
-			find_check(game_array,window,square);
+			
 				 return 1; //move not successful:
 			 }
 			 else
@@ -217,8 +215,10 @@ void movement :: find_check(int(&game_array)[8][8],RenderWindow (&window),Rectan
 			//break;
 		}//ending of 1st for loop
 	}// ending of 2nd for loop
-	
 
+	king_no=-5; //at 1st lets take black king;
+
+		//loop for checking if the black king is checked
 		for(pair<int,int> king_dir: king_direction)
 		{
 			int new_row= b_row+ king_dir.first;
@@ -230,8 +230,7 @@ void movement :: find_check(int(&game_array)[8][8],RenderWindow (&window),Rectan
 				 if(game_array[new_row][new_col]>0) //finds white piece
 				{
 
-					
-						//for rook
+					//for rook
 						if(game_array[new_row][new_col]==1){
 							if((a==-1 && b==0) || (a==0 && b==-1) || (a==0 && b==1) || (a==1 && b==0)){
 								b_check=true;
@@ -258,6 +257,7 @@ void movement :: find_check(int(&game_array)[8][8],RenderWindow (&window),Rectan
 							if((a==-2 && b==-1) || (a==-2 && b==1) || (a==-1 && b==2) || (a==1 && b==2) ||
 							    (a==2 && b==1) || (a==2 && b==-1) || (a==1 && b==-2) || (a==-1 && b==2)){
 								b_check=true;
+								break;
 							}
 						}//ending of knight
 
@@ -274,13 +274,9 @@ void movement :: find_check(int(&game_array)[8][8],RenderWindow (&window),Rectan
 
 				}
 				//aafnai goti raicha vney break vara new pair liney
-				if(game_array[new_row][new_col]<0){
-					break;}
-					//knight ko auta side check grya paxi break vara new pairs ma janey
-				if((a==-2 && b==-1) || (a==-2 && b==1) || (a==-1 && b==2) || (a==1 && b==2) ||
-							    (a==2 && b==1) || (a==2 && b==-1) || (a==1 && b==-2) || (a==-1 && b==2)){
-								break;
-							}	
+				if(game_array[new_row][new_col]<0)
+				{break;}
+					
 
 
 				new_row+=king_dir.first;
@@ -329,6 +325,7 @@ void movement :: find_check(int(&game_array)[8][8],RenderWindow (&window),Rectan
 							if((a==-2 && b==-1) || (a==-2 && b==1) || (a==-1 && b==2) || (a==1 && b==2) ||
 							    (a==2 && b==1) || (a==2 && b==-1) || (a==1 && b==-2) || (a==-1 && b==2)){
 								w_check=true;
+								break;
 							}
 						}//ending of knight
 
@@ -346,11 +343,7 @@ void movement :: find_check(int(&game_array)[8][8],RenderWindow (&window),Rectan
 				//aafnai goti raicha vney break vara new pair liney
 				if(game_array[new_row][new_col]>0){
 					break;}
-					//knight ko auta side check grya paxi break vara new pairs ma janey
-				if((a==-2 && b==-1) || (a==-2 && b==1) || (a==-1 && b==2) || (a==1 && b==2) ||
-							    (a==2 && b==1) || (a==2 && b==-1) || (a==1 && b==-2) || (a==-1 && b==2)){
-								break;
-							}	
+					
 
 
 				new_row+=king_dir.first;
@@ -375,6 +368,6 @@ void movement :: find_check(int(&game_array)[8][8],RenderWindow (&window),Rectan
 
 
 	c1.set_piece_to_board(window, game_array,square, tex, sp);
-	window.display();
+	
 
 }  //ending of this function 
