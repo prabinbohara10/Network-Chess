@@ -3,8 +3,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <iostream>
-#include<vector>
-#include"piece.h"
+#include <vector>
+#include "piece.h"
 using namespace std;
 using namespace sf;
 class king

@@ -15,7 +15,8 @@
 
 using namespace std;
 
-
+int mouse_pos_x;
+int mouse_pos_y;
 
 int main()
 {

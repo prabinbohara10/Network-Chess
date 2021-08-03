@@ -1,9 +1,5 @@
 #include "king.h"
-<<<<<<< HEAD
-//ayush batala
-=======
-//prabin bohara changed
->>>>>>> d9ba85e3130223a8ba63fea719f86738c3fbafe7
+
 void king::showpath(RenderWindow& window, int(&board)[8][8],RectangleShape (&square)[8][8],int row,int col,
 		int piece,vector<vector<int>> &current_possible,int current_side)
 {

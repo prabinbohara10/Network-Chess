@@ -27,6 +27,8 @@
 			//getting x and y when mouse is clicked:
 			int x = Mouse::getPosition(window).x;
 			int y = Mouse::getPosition(window).y;
+			mouse_pos_x = x;
+			mouse_pos_y = y;
 			
 			//condition is only triggered when clicked within the chess board:
 			if (x >= 0 && x <= 800 && y >= 0 && y <= 640) //if inside the board??
@@ -43,7 +45,7 @@
 			int move_flag= movement1.is_move_success(window,square,game_array,current_possible,current_side_to_play,row_no, col_no);
 			if(move_flag)
 			{
-				gamesidescreen(window, 0, 0);
+				gamesidescreen(window, mouse_pos_x,mouse_pos_y);
 				window.display();
 			 return;
 			}
@@ -113,7 +115,8 @@
 				//Why making baseboard function is above?
 				//just to draw different colours to the squares of possible moves:
 				c1.set_piece_to_board(window, game_array,square, tex, sp);
-				gamesidescreen(window, 0, 0);
+				p1.promotion(window, game_array, square, row_no, col_no, clicked_piece,current_possible,current_side_to_play);
+				gamesidescreen(window, mouse_pos_x,mouse_pos_y);
 
 			window.display();
 			//else part of "if clicked is on same square:"

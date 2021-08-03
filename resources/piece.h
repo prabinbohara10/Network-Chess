@@ -3,7 +3,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <iostream>
-#include<vector>
+#include <vector>
 using namespace std;
 
 using namespace sf;

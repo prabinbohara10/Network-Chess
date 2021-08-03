@@ -12,6 +12,10 @@ using namespace std;
 using namespace sf;
 extern int castling_possible_arr[2][3];
 extern int en_passant_possible_arr[4];
+
+extern int mouse_pos_x;
+extern int mouse_pos_y;
+
 class movement
 {
     private:

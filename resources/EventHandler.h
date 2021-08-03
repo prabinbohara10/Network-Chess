@@ -19,7 +19,8 @@ using namespace sf;
 
 
 //GLOBAL ENTITIES:	
-
+extern int mouse_pos_x;
+extern int mouse_pos_y;
 
 class EventHandler
 {

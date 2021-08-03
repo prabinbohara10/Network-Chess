@@ -13,8 +13,80 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							//need_to_show_possible_moves=0;
 							int parent_row=current_possible[0][0];
 							int parent_col=current_possible[0][1];
-							game_array[parent_row][parent_col]=0;
-							game_array[current_row][current_col]=current_possible[0][2];
+							//game_array[parent_row][parent_col]=0;
+							//game_array[current_row][current_col]=current_possible[0][2];
+							//if move is promotion
+							if ((game_array[parent_row][parent_col]==6 && current_row==0) || (game_array[parent_row][parent_col]==-6 && current_row==7 ))
+							{
+
+								int i = current_col;
+								int j = current_row;
+								if(game_array[parent_row][parent_col]==6 && current_row==0)
+								{
+
+									//std::cout<<"yes"<<std::endl;
+
+										if(mouse_pos_x>(i*80) && mouse_pos_x<(i*80+60*0.65) && mouse_pos_y>(j*80) && mouse_pos_y<(j*80+60*0.65))
+										{
+											game_array[current_row][current_col]=1;
+
+										}
+										else if(mouse_pos_x>(i*80+60*0.65) && mouse_pos_x<(i*80+60*0.65*2) && mouse_pos_y>(j*80) && mouse_pos_y<(j*80+60*0.65))
+										{
+											game_array[current_row][current_col]=2;
+										}
+										else if(mouse_pos_x>(i*80) && mouse_pos_x<(i*80+60*0.65) && mouse_pos_y>(j*80+60*0.65) && mouse_pos_y<(j*80+60*0.65*2))
+										{
+											game_array[current_row][current_col]=3;
+										}
+										else if(mouse_pos_x>(i*80+60*0.65) && mouse_pos_x<(i*80+60*0.65*2) && mouse_pos_y>(j*80+60*0.65) && mouse_pos_y<(j*80+60*0.65*2))
+										{
+											game_array[current_row][current_col]=4;
+										}
+										else{}
+									game_array[parent_row][parent_col]=0;	
+
+
+								}
+
+								if(game_array[parent_row][parent_col]==-6 && current_row==7)
+								{
+
+									//std::cout<<"yes"<<std::endl;
+
+										if(mouse_pos_x>(i*80) && mouse_pos_x<(i*80+60*0.65) && mouse_pos_y>(j*80) && mouse_pos_y<(j*80+60*0.65))
+										{
+											game_array[current_row][current_col]=-1;
+
+										}
+										else if(mouse_pos_x>(i*80+60*0.65) && mouse_pos_x<(i*80+60*0.65*2) && mouse_pos_y>(j*80) && mouse_pos_y<(j*80+60*0.65))
+										{
+											game_array[current_row][current_col]=-2;
+										}
+										else if(mouse_pos_x>(i*80) && mouse_pos_x<(i*80+60*0.65) && mouse_pos_y>(j*80+60*0.65) && mouse_pos_y<(j*80+60*0.65*2))
+										{
+											game_array[current_row][current_col]=-3;
+										}
+										else if(mouse_pos_x>(i*80+60*0.65) && mouse_pos_x<(i*80+60*0.65*2) && mouse_pos_y>(j*80+60*0.65) && mouse_pos_y<(j*80+60*0.65*2))
+										{
+											game_array[current_row][current_col]=-4;
+										}
+										else{}
+									game_array[parent_row][parent_col]=0;	
+
+
+								}
+
+
+
+
+							}
+							else
+							{
+								game_array[parent_row][parent_col]=0;
+								game_array[current_row][current_col]=current_possible[0][2];
+
+							}
 
 							
     
