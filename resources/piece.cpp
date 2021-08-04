@@ -90,13 +90,17 @@ int piece::is_king_castling_possible(RectangleShape (&square)[8][8],int(&board)[
 void piece::is_en_passant(RectangleShape (&square)[8][8],int(&board)[8][8],
 		vector<vector<int>> &current_possible,int current_side,int clicked_row,int clicked_col)
 {
+    
     int pawn_row_factor=((current_side==0) ? -1 : 1);
     if(en_passant_possible_arr[0]==1)
     {
         if(clicked_row==en_passant_possible_arr[1]) //checks if row is same:
         {
            if(clicked_col==(en_passant_possible_arr[2]-1) || clicked_col==(en_passant_possible_arr[2]+1) )
-            {copy_to_2dvector(square,current_possible,clicked_row+ pawn_row_factor,en_passant_possible_arr[2],1,2);}
+            {
+                copy_to_2dvector(square,current_possible,clicked_row+ pawn_row_factor,en_passant_possible_arr[2],
+                1,2*pawn_row_factor);
+            }
         }
     }
 }

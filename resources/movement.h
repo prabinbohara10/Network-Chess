@@ -54,6 +54,7 @@ class movement
         void possible_en_passant(int(&game_array)[8][8],vector<vector<int>> &current_possible,int moved_index);
         int find_check(int(&game_array)[8][8],RenderWindow (&window),RectangleShape (&square)[8][8],
           int &current_side);
-        void find_captured_pieces(RenderWindow (&window),int current_row,int current_col,int(&temp_array)[8][8]);
+        void find_captured_pieces(RenderWindow (&window),vector<vector<int>> &current_possible,
+        int(&temp_array)[8][8],int i);
         void show_captured_pieces(RenderWindow (&window));
 };

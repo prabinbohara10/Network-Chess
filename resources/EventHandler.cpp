@@ -33,9 +33,19 @@
 			//condition is only triggered when clicked within the chess board:
 			if (x >= 0 && x <= 800 && y >= 0 && y <= 640) //if inside the board??
 			{
+				int board_x_lower=160;
+				int board_y_lower=0;
+				if(x>=board_x_lower)
+				{
 				row_no = y / 80;
 				col_no = (x-Added_width)/ 80;
+				
 				clicked_piece = game_array[row_no][col_no];
+				cout<<" x : "<<x<<"   y : "<<y<<endl;
+				cout<<" row_no : "<<row_no<<"   col_no : "<<col_no<<endl;
+				cout<<"clicked piece : "<<clicked_piece<<endl;
+				}
+				
 
 
 			

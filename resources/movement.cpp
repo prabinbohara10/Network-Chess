@@ -67,7 +67,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 								if(temp_array[parent_row][parent_col]==6 && current_row==0)
 								{
 
-									find_captured_pieces(window,current_row,current_col,temp_array);
+									
 									//std::cout<<"yes"<<std::endl;
 
 										if(mouse_pos_x>(Added_width+a*80) && mouse_pos_x<(Added_width+a*80+60*0.65) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
@@ -96,7 +96,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 								if(temp_array[parent_row][parent_col]==-6 && current_row==7)
 								{
 
-									find_captured_pieces(window,current_row,current_col,temp_array);
+								
 									//std::cout<<"yes"<<std::endl;
 
 										if(mouse_pos_x>(Added_width+a*80) && mouse_pos_x<(Added_width+a*80+60*0.65) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
@@ -127,7 +127,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							{
 								
 								temp_array[parent_row][parent_col]=0;
-								find_captured_pieces(window,current_row,current_col,temp_array);
+								
 								temp_array[current_row][current_col]=current_possible[0][2];
 
 							}
@@ -156,7 +156,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							{
 								int row=current_possible[0][0];
 								int col=current_col;
-								find_captured_pieces(window,row,col,temp_array);
+								
 								temp_array[row][col]=0;
 							}
 							en_passant_possible_arr[0]=0;//disable en passant:
@@ -202,7 +202,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 								}
 								else {}
 									
-
+								find_captured_pieces(window,current_possible,game_array,i);
 								
 								
 								//copy temp_array to game_array:
@@ -234,7 +234,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 				}
 			}
 
-
+			int abc=find_check(game_array,window,square,current_side);
 			//to remove all elemets of vector 
 			 //	:either it finds possible moves or not:
 			current_possible.clear();
@@ -506,12 +506,14 @@ int movement :: find_check(int(&game_array1)[8][8],RenderWindow (&window),Rectan
 
 	if(current_side==0 && w_check==true ){
 		b_check=false;
+		
 		return 1;
 	}
 	else if(current_side==1 && b_check==true){
 		// square[w_row][w_col].setFillColor(Color::Red);
 		// window.draw(square[w_row][w_col]);
 		w_check=false;
+		
 		return 1;
 	}
 	else
@@ -525,8 +527,21 @@ cout<<"never here:";
 
 
 
-void movement::find_captured_pieces(RenderWindow (&window),int current_row,int current_col,int(&temp_array)[8][8])
+void movement::find_captured_pieces(RenderWindow (&window),vector<vector<int>> &current_possible,
+	int(&temp_array)[8][8],int i)
 {
+	int current_row=current_possible[i][0];
+	int current_col=current_possible[i][1];
+	if(current_possible[i][3]==-2)//if en passant://white turn;
+	{
+		current_row++;
+	}
+	if(current_possible[i][3]==2)//if en passant://black turn:
+	{
+		current_row--;
+	}
+	
+
 	if(temp_array[current_row][current_col]<0)
 	{
 		bcaptured_pieces.push_back(temp_array[current_row][current_col]);
