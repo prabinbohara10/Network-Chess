@@ -119,10 +119,11 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 
 
 								}
-
+ 
 							}
 							else
 							{
+								
 								temp_array[parent_row][parent_col]=0;
 								temp_array[current_row][current_col]=current_possible[0][2];
 
@@ -131,18 +132,19 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							
     
                             //if the move is castling:
-							int castling_row=((current_side==0) ? 7 :0);
+						int castling_row=((current_side==0) ? 7 :0);
                             if(current_possible[i][3]==-1)
                             {
+								//to move rook only since king has already moved above:
                                 temp_array[castling_row][3]=temp_array[castling_row][0];
                                 temp_array[castling_row][0]=0;
-                                castling_possible_arr[current_side][0]=0;
+                                
                             }
                             else if(current_possible[i][3]==1)
                             {
                                 temp_array[castling_row][5]=temp_array[castling_row][7];
                                 temp_array[castling_row][7]=0;
-                                castling_possible_arr[current_side][0]=0;
+                                
                             }
                             else {}
 
@@ -157,30 +159,69 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							int current_piece_moved=current_possible[0][2];
 							if(current_piece_moved==6 || current_piece_moved==-6)
 							   { possible_en_passant(temp_array,current_possible,i);}
+
+
 							
+							//checks if there is check or not for current move:
 							int abc=find_check(temp_array,window,square,current_side);
 							if(!abc)
 							{
-								//copy temp_array to game_array:
-							copy_2d_array(game_array,temp_array);
-							current_side=!current_side; //to switch current side to play:
-							
-							current_possible.clear();
-                            
-							window.clear();
-							c1.draw_baseboard(window,square);
-							if(w_check==true){
-		 					square[w_row][w_col].setFillColor(Color::Red);
-							 window.draw(square[w_row][w_col]);
-							}
-							if(b_check==true ){
-							square[b_row][b_col].setFillColor(Color::Red);
-							window.draw(square[b_row][b_col]);
-							}
+								if( (current_possible[0][2]==1)
+								    || (current_possible[0][2]==-1) )
+								{
+									if(current_possible[0][1]==0)
+										castling_possible_arr[current_side][1]=0;
+									if(current_possible[0][1]==7)
+										castling_possible_arr[current_side][2]=0;
+								}
 
-							c1.set_piece_to_board(window, game_array,square, tex, sp);
+								if (current_possible[i][1]==0)
+								{
+									if((current_possible[i][0]==0) ||(current_possible[i][0]==7))
+									castling_possible_arr[!current_side][1]=0;
+								}
+								if (current_possible[i][1]==7)
+								{
+									if((current_possible[i][0]==0) ||(current_possible[i][0]==7))
+									castling_possible_arr[!current_side][2]=0;
+								}
+
+								//if move is castling:
+								
+								if(current_possible[i][3]==-1)
+								{
+									castling_possible_arr[current_side][0]=0;
+								}
+								else if(current_possible[i][3]==1)
+								{
+									castling_possible_arr[current_side][0]=0;
+								}
+								else {}
+									
+
+								
+								
+								//copy temp_array to game_array:
+								copy_2d_array(game_array,temp_array);
 							
-							return 1;
+							
+								current_possible.clear();
+                            
+								window.clear();
+								c1.draw_baseboard(window,square);
+								if(w_check==true){
+		 						square[w_row][w_col].setFillColor(Color::Red);
+							 	window.draw(square[w_row][w_col]);
+								}
+								if(b_check==true ){
+								square[b_row][b_col].setFillColor(Color::Red);
+								window.draw(square[b_row][b_col]);
+								}
+
+								c1.set_piece_to_board(window, game_array,square, tex, sp);
+								current_side=!current_side; //to switch current side to play:
+							
+								return 1;
 							}
 							
 					
@@ -197,6 +238,24 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 			w_col=king_pos[0][1];
 			b_row=king_pos[1][0];
 			b_col=king_pos[1][1];
+
+			    if(current_side==0 && w_check==true)
+				{
+					//w_check=false;
+				// 	if((w_row+w_col)%2==0)
+				// 		square[w_row][w_col].setFillColor(Color::White);
+				// 	else 
+				// 	square[w_row][w_col].setFillColor(Color::Black);
+				
+				// window.draw(square[w_row][w_col]);
+				
+					
+				}
+				if(current_side==1 && b_check==true )
+				{
+					//b_check=false;
+				}
+			
 
 			if( (current_side==0 && game_array[current_row][current_col]<0)  //black click detected:
 				|| (current_side==1 && game_array[current_row][current_col]>0) ) //white click detected:
@@ -437,26 +496,18 @@ int movement :: find_check(int(&game_array1)[8][8],RenderWindow (&window),Rectan
 	window.clear();
 	c1.draw_baseboard(window,square);
 	
-	if(w_check==true){
-		 square[w_row][w_col].setFillColor(Color::Red);
-		 window.draw(square[w_row][w_col]);
-	}
-	if(b_check==true ){
-		square[b_row][b_col].setFillColor(Color::Red);
-		window.draw(square[b_row][b_col]);
-	}
-	
+
 
 
 
 	if(current_side==0 && w_check==true ){
-		// square[b_row][b_col].setFillColor(Color::Red);
-		// window.draw(square[b_row][b_col]);
+		b_check=false;
 		return 1;
 	}
 	else if(current_side==1 && b_check==true){
 		// square[w_row][w_col].setFillColor(Color::Red);
 		// window.draw(square[w_row][w_col]);
+		w_check=false;
 		return 1;
 	}
 	else

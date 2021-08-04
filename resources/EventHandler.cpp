@@ -5,7 +5,7 @@
 	   
 	   //checking special cases i.e. special movements:
 			// 1)castling  2)En passant 3)Check  4)Checkmate  5)
-
+      
 
 		//any event is triggered:
 	    while (window.pollEvent(event1)) {
@@ -44,6 +44,7 @@
 			int move_flag= movement1.is_move_success(window,square,game_array,current_possible,current_side_to_play,row_no, col_no);
 			if(move_flag)
 			{
+				
 				gamesidescreen(window, mouse_pos_x,mouse_pos_y);
 				window.display();
 			 return;
@@ -116,12 +117,13 @@
 				//just to draw different colours to the squares of possible moves:
 					if(b_check==true)
 					{
-					square[b_row][b_col].setFillColor(Color::Red);
+						cout<<"2 ";
+					square[b_row][b_col].setFillColor(Color::Green);
 					window.draw(square[b_row][b_col]);
 					}
 					else if(w_check==true)
 					{
-		 			square[w_row][w_col].setFillColor(Color::Red);
+		 			square[w_row][w_col].setFillColor(Color::Green);
 		 			window.draw(square[w_row][w_col]);
 					}
 					else{}
