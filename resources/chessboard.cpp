@@ -91,7 +91,7 @@ void chessboard::set_piece_to_board(RenderWindow& window,int (&board)[8][8],Rect
 				tex.setSmooth(true);
 				sp.setTexture(tex);
 
-				sp.setPosition(size * j, (size * i));
+				sp.setPosition((Added_width+size * j), (size * i));
 				sp.setScale(scale,scale);
 				window.draw(sp);
 
@@ -112,7 +112,7 @@ void chessboard::draw_baseboard(RenderWindow& window,RectangleShape(&square)[8][
 	for (int i = 0; i < row; i++) {
 		for (int j = 0; j < col; j++) {
 			square[i][j].setSize(Vector2f(80.f, 80.f));
-			square[i][j].setPosition(80 * j, (80 * i));
+			square[i][j].setPosition((Added_width+80 * j), (80 * i));
 			if ((i + j) % 2 == 0) {
 				square[i][j].setFillColor(Color::White);
 				square[i][j].setOutlineThickness(1.f);

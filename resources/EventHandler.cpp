@@ -34,7 +34,7 @@
 			if (x >= 0 && x <= 800 && y >= 0 && y <= 640) //if inside the board??
 			{
 				row_no = y / 80;
-				col_no = x / 80;
+				col_no = (x-Added_width)/ 80;
 				clicked_piece = game_array[row_no][col_no];
 
 
@@ -45,7 +45,9 @@
 			if(move_flag)
 			{
 				
-				gamesidescreen(window, mouse_pos_x,mouse_pos_y);
+				gameleftsidescreen(window, mouse_pos_x,mouse_pos_y);
+				gamerightsidescreen(window);
+				movement1.show_captured_pieces(window);
 				window.display();
 			 return;
 			}
@@ -130,7 +132,9 @@
 
 				c1.set_piece_to_board(window, game_array,square, tex, sp);
 				p1.promotion(window, game_array, square, row_no, col_no, clicked_piece,current_possible,current_side_to_play);
-				gamesidescreen(window, mouse_pos_x,mouse_pos_y);
+				gameleftsidescreen(window, mouse_pos_x,mouse_pos_y);
+				gamerightsidescreen(window);
+				movement1.show_captured_pieces(window);
 
 			    window.display();
 			//else part of "if clicked is on same square:"
@@ -152,23 +156,23 @@
    }//void forMouseClicked() function:
 
 
-void EventHandler:: gamesidescreen(RenderWindow &window,int x, int y)
+void EventHandler:: gameleftsidescreen(RenderWindow &window,int x, int y)
 {
     
     Texture background1,menu2,bmenu2;
 	Sprite sbackground1,smenu2,sbmenu2;
-	background1.loadFromFile("../resources/menu/background2.jpg");
-	background1.setSmooth("true");
+	//background1.loadFromFile("../resources/menu/background2.jpg");
+	//background1.setSmooth("true");
 	
-	sbackground1.setTexture(background1);
+	//sbackground1.setTexture(background1);
 	
 	//sp3.setScale(0.5, 0.5);
-	sbackground1.setPosition(640,0);
+	//sbackground1.setPosition(0,0);
 	menu2.loadFromFile("../resources/menu/menu.png");
 	menu2.setSmooth("true");
 	smenu2.setTexture(menu2);
 	smenu2.setScale(0.75, 0.75);
-	smenu2.setPosition(window.getSize().x - smenu2.getGlobalBounds().width, window.getSize().y - smenu2.getGlobalBounds().height);
+	smenu2.setPosition(4, 640-smenu2.getGlobalBounds().height-4);
     //bmenu2.loadFromFile("../resources/menu/menubig.png");
 	//bmenu2.setSmooth("true");
 	//sbmenu2.setTexture(bmenu2);
@@ -199,11 +203,27 @@ void EventHandler:: gamesidescreen(RenderWindow &window,int x, int y)
         
         window.draw(smenu2);
     }
-
-
-    
-    
-   
-    
-	
 }
+
+
+void EventHandler:: gamerightsidescreen(RenderWindow &window)
+{
+	RectangleShape rec1,rec2;
+	Texture tex;
+	Sprite sp;
+	tex.loadFromFile("../resources/menu/captured white pieces.png");
+	tex.setSmooth(true);
+	sp.setTexture(tex);
+	sp.setPosition(Added_width+640,0);
+	
+	//rec1.setSize(Vector2f(160,160));
+	//rec1.setFillColor(Color::Yellow);
+	//rec1.setPosition(0,0);
+	rec2.setSize(Vector2f(160,160));
+	rec2.setFillColor(Color::Yellow);
+	rec2.setPosition(Added_width+640,480);
+	window.draw(sp);
+	window.draw(rec2);
+
+}
+

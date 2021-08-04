@@ -15,6 +15,11 @@
 
 using namespace std;
 
+int Added_width = 160;
+
+vector<int> bcaptured_pieces;
+vector<int> wcaptured_pieces;
+
 int mouse_pos_x;
 int mouse_pos_y;
 

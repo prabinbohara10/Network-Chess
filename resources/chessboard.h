@@ -5,6 +5,9 @@
 #include <iostream>
 using namespace sf;
 
+extern int Added_width;
+
+
 class chessboard
 {
 public:

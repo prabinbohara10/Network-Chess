@@ -25,6 +25,11 @@ extern int mouse_pos_y;
 extern	bool w_check;
 extern  bool b_check;
 
+extern int Added_width;	
+
+extern int mouse_pos_x;
+extern int mouse_pos_y;
+
 extern int b_row,b_col,w_row,w_col;
 
 class EventHandler
@@ -60,7 +65,9 @@ public:
    //passing game window, game_array and base squares:
    void event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8]);
 
-   void gamesidescreen(RenderWindow &window,int x, int y);
+   void gameleftsidescreen(RenderWindow &window,int x, int y);
+   void gamerightsidescreen(RenderWindow &window);
+
    
     
 

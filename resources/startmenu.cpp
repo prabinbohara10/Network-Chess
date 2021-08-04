@@ -56,7 +56,8 @@ void startmenu::mainmenu()
     sbexit.setScale(0.75, 0.75);
 
 
-    
+    bcaptured_pieces.clear();
+	wcaptured_pieces.clear();
 	
 
 	while (menu.isOpen())
@@ -181,13 +182,13 @@ void startmenu::main_game()
 	// };
 
 	int game_array[8][8]={
-		{ -1,-2,-3,-4,-5,-3,-2,-1 },
-	  { -6,-6,-6,-6,-6,-6,-6,-6 },
+	  { -1,0,-3,-4,-5,-3,0,-1 },
+	  { -6,6,-6,-6,-6,-6,6,-6 },
 	  {  0, 0, 0, 0, 0, 0, 0, 0 },
 	  {  0, 0, 0, 0, 0, 0, 0, 0 },
 	  {  0, 0, -6, 4, 0, 0, 0, 0 },
 	  {  0, 0, 0, 0, 0, 0, 0, 0 },
-	  {  -1, 6, 0, 0, 6, 0,-1, 6 },
+	  {  -1, -6, 0, 0, 6, 0,-6, 6 },
 	  {  1, 0, 3, 4, 5, 0, 0, 1 }
 	};
 
@@ -196,7 +197,7 @@ void startmenu::main_game()
 	Sprite sp;         //for displaying those images
 
 
-	RenderWindow window(VideoMode(800, 640), "THE BOARD", Style::Close | Style::Titlebar);
+	RenderWindow window(VideoMode(Added_width+800, 640), "THE BOARD", Style::Close | Style::Titlebar);
 	window.setFramerateLimit(60); 
 
 	
@@ -213,7 +214,8 @@ void startmenu::main_game()
 
 	//for handling events: EventHandler class
 	EventHandler eventhandler1;
-	eventhandler1.gamesidescreen(window,0,0);
+	eventhandler1.gameleftsidescreen(window,0,0);
+	eventhandler1.gamerightsidescreen(window);
 	//display the initial postion board:
 	window.display();
 

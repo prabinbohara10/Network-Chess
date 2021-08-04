@@ -9,6 +9,9 @@
 
 using namespace std;
 using namespace sf;
+
+extern int Added_width;
+
 class pawn
 {
 	private:

@@ -67,22 +67,23 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 								if(temp_array[parent_row][parent_col]==6 && current_row==0)
 								{
 
+									find_captured_pieces(window,current_row,current_col,temp_array);
 									//std::cout<<"yes"<<std::endl;
 
-										if(mouse_pos_x>(a*80) && mouse_pos_x<(a*80+60*0.65) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
+										if(mouse_pos_x>(Added_width+a*80) && mouse_pos_x<(Added_width+a*80+60*0.65) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
 										{
 											temp_array[current_row][current_col]=1;
 
 										}
-										else if(mouse_pos_x>(a*80+60*0.65) && mouse_pos_x<(a*80+60*0.65*2) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
+										else if(mouse_pos_x>(Added_width+a*80+60*0.65) && mouse_pos_x<(Added_width+a*80+60*0.65*2) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
 										{
 											temp_array[current_row][current_col]=2;
 										}
-										else if(mouse_pos_x>(a*80) && mouse_pos_x<(a*80+60*0.65) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
+										else if(mouse_pos_x>(Added_width+a*80) && mouse_pos_x<(Added_width+a*80+60*0.65) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
 										{
 											temp_array[current_row][current_col]=3;
 										}
-										else if(mouse_pos_x>(a*80+60*0.65) && mouse_pos_x<(a*80+60*0.65*2) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
+										else if(mouse_pos_x>(Added_width+a*80+60*0.65) && mouse_pos_x<(Added_width+a*80+60*0.65*2) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
 										{
 											temp_array[current_row][current_col]=4;
 										}
@@ -95,22 +96,23 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 								if(temp_array[parent_row][parent_col]==-6 && current_row==7)
 								{
 
+									find_captured_pieces(window,current_row,current_col,temp_array);
 									//std::cout<<"yes"<<std::endl;
 
-										if(mouse_pos_x>(a*80) && mouse_pos_x<(a*80+60*0.65) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
+										if(mouse_pos_x>(Added_width+a*80) && mouse_pos_x<(Added_width+a*80+60*0.65) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
 										{
 											temp_array[current_row][current_col]=-1;
 
 										}
-										else if(mouse_pos_x>(a*80+60*0.65) && mouse_pos_x<(a*80+60*0.65*2) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
+										else if(mouse_pos_x>(Added_width+a*80+60*0.65) && mouse_pos_x<(Added_width+a*80+60*0.65*2) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
 										{
 											temp_array[current_row][current_col]=-2;
 										}
-										else if(mouse_pos_x>(a*80) && mouse_pos_x<(a*80+60*0.65) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
+										else if(mouse_pos_x>(Added_width+a*80) && mouse_pos_x<(Added_width+a*80+60*0.65) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
 										{
 											temp_array[current_row][current_col]=-3;
 										}
-										else if(mouse_pos_x>(a*80+60*0.65) && mouse_pos_x<(a*80+60*0.65*2) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
+										else if(mouse_pos_x>(Added_width+a*80+60*0.65) && mouse_pos_x<(Added_width+a*80+60*0.65*2) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
 										{
 											temp_array[current_row][current_col]=-4;
 										}
@@ -125,6 +127,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							{
 								
 								temp_array[parent_row][parent_col]=0;
+								find_captured_pieces(window,current_row,current_col,temp_array);
 								temp_array[current_row][current_col]=current_possible[0][2];
 
 							}
@@ -153,6 +156,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							{
 								int row=current_possible[0][0];
 								int col=current_col;
+								find_captured_pieces(window,row,col,temp_array);
 								temp_array[row][col]=0;
 							}
 							en_passant_possible_arr[0]=0;//disable en passant:
@@ -518,3 +522,161 @@ cout<<"never here:";
 	
 
 }  //ending of this function 
+
+
+
+void movement::find_captured_pieces(RenderWindow (&window),int current_row,int current_col,int(&temp_array)[8][8])
+{
+	if(temp_array[current_row][current_col]<0)
+	{
+		bcaptured_pieces.push_back(temp_array[current_row][current_col]);
+		//std::cout<<bcaptured_pieces[0];
+	}
+	if(temp_array[current_row][current_col]>0 )
+	{
+		wcaptured_pieces.push_back(temp_array[current_row][current_col]);
+
+	}
+	
+}
+
+void movement::show_captured_pieces(RenderWindow (&window))
+{
+	Texture btex,wtex;
+	Sprite bsp,wsp;
+	float small_scale =0.666;
+	
+	
+	if(bcaptured_pieces.size()>0)
+	{
+		//std::cout<<bcaptured_pieces[0];
+	for(int x=0;x<bcaptured_pieces.size();x++)
+	{
+		switch(bcaptured_pieces[x])
+	      {
+		case -1:       //for black rook
+			btex.loadFromFile("../resources/texture/black rook.png");
+					
+					
+
+			break;
+		case -2:      //for black knight
+			btex.loadFromFile("../resources/texture/black knight.png");
+					
+					
+
+			break;
+	    case -3:
+			btex.loadFromFile("../resources/texture/black bishop.png");
+					
+			break;
+
+		case -4:
+			btex.loadFromFile("../resources/texture/black queen.png");
+			break;
+
+		case -6:
+			btex.loadFromFile("../resources/texture/black pawn.png");
+			break;
+
+	    }
+
+		btex.setSmooth(true);
+		bsp.setTexture(btex);
+		if(x<4)
+		{
+			bsp.setPosition(Added_width+640+x*60*small_scale,15*60*small_scale);
+
+		}
+		if (x>=4 && x<8)
+		{
+			int p = x-4;
+			bsp.setPosition(Added_width+640+ p*60*small_scale,14*60*small_scale);
+		}
+		if (x>=8 && x<12)
+		{
+			int q = x-8;
+			bsp.setPosition(Added_width+640+q*60*small_scale,13*60*small_scale);
+		}
+		if (x>=12 && x<16)
+		{
+			int r = x-12;
+			bsp.setPosition(Added_width+640+r*60*small_scale,12*60*small_scale);
+		}
+
+		
+		bsp.setScale(small_scale,small_scale);
+		window.draw(bsp);
+
+	}
+	}
+
+	if(wcaptured_pieces.size()>0)
+	{
+
+
+	for(int y=0;y<wcaptured_pieces.size();y++)
+	{
+		switch(wcaptured_pieces[y])
+	      {
+		case 1:       //for black rook
+			wtex.loadFromFile("../resources/texture/white rook.png");
+					
+					
+
+			break;
+		case 2:      //for black knight
+			wtex.loadFromFile("../resources/texture/white knight.png");
+					
+					
+
+			break;
+	    case 3:
+			wtex.loadFromFile("../resources/texture/white bishop.png");
+					
+			break;
+
+		case 4:
+			wtex.loadFromFile("../resources/texture/white queen.png");
+			break;
+
+		case 6:
+			wtex.loadFromFile("../resources/texture/white pawn.png");
+			break;
+
+	    }
+
+		wtex.setSmooth(true);
+		wsp.setTexture(wtex);
+		if(y<4)
+		{
+			wsp.setPosition(Added_width+640+y*60*small_scale,0);
+
+		}
+		if (y>=4 && y<8)
+		{
+			int p = y-4;
+			wsp.setPosition(Added_width+640+p*60*0.66,60*small_scale);
+		}
+		if (y>=8 && y<12)
+		{
+			int q = y-8;
+			wsp.setPosition(Added_width+640+q*60*0.66,2*60*small_scale);
+		}
+		if (y>=12 && y<16)
+		{
+			int r = y-12;
+			wsp.setPosition(Added_width+640+r*60*0.66,3*60*small_scale);
+		}
+
+		
+		wsp.setScale(small_scale,small_scale);
+		window.draw(wsp);
+
+	}
+
+	}
+			
+
+				
+}

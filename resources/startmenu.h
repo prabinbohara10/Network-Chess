@@ -16,6 +16,10 @@
 
 using namespace std;
 using namespace sf;
+
+extern vector<int> bcaptured_pieces;
+extern vector<int> wcaptured_pieces;
+
 class startmenu
 {
 public:
