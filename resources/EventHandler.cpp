@@ -118,12 +118,12 @@
 					if(b_check==true)
 					{
 						cout<<"2 ";
-					square[b_row][b_col].setFillColor(Color::Green);
+					square[b_row][b_col].setFillColor(Color::Red);
 					window.draw(square[b_row][b_col]);
 					}
 					else if(w_check==true)
 					{
-		 			square[w_row][w_col].setFillColor(Color::Green);
+		 			square[w_row][w_col].setFillColor(Color::Red);
 		 			window.draw(square[w_row][w_col]);
 					}
 					else{}
