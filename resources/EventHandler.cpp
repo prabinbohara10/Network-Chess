@@ -1,6 +1,6 @@
 #include"EventHandler.h"
 //passing game window, game_array and base squares:
-   void EventHandler:: event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8])
+   void EventHandler:: event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8],int &current_side_to_play)
    {
 	   
 	   //checking special cases i.e. special movements:
@@ -41,9 +41,7 @@
 				col_no = (x-Added_width)/ 80;
 				
 				clicked_piece = game_array[row_no][col_no];
-				cout<<" x : "<<x<<"   y : "<<y<<endl;
-				cout<<" row_no : "<<row_no<<"   col_no : "<<col_no<<endl;
-				cout<<"clicked piece : "<<clicked_piece<<endl;
+			
 				}
 				
 
@@ -61,7 +59,11 @@
 				window.display();
 			 return;
 			}
-			
+
+		//espically used when playing between two pc:
+		//"my_turn" is always set to 1 when played in same pc:	
+		if(my_turn==true)
+		{
 			//checking of white moves in white turn and black moves in black turn:	
 			if((current_side_to_play==0 && clicked_piece>=0) || (current_side_to_play==1 && clicked_piece<=0))
 			{
@@ -149,6 +151,7 @@
 			    window.display();
 			//else part of "if clicked is on same square:"
 			}//end of if (checking if white moves in white turn and black in black turn)
+		}//end of if(if my_turn==true)
 
 				
 

@@ -58,69 +58,13 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							//game_array[current_row][current_col]=current_possible[0][2];
 							
 							//if move is promotion
-							if ((temp_array[parent_row][parent_col]==6 && current_row==0) ||
-									 (temp_array[parent_row][parent_col]==-6 && current_row==7 ))
+							if(  ( (white_up_or_down==1)&&  ((temp_array[parent_row][parent_col]==6 && current_row==0) ||
+									 (temp_array[parent_row][parent_col]==-6 && current_row==7 )) )
+								|| ( (white_up_or_down==0)&&  ((temp_array[parent_row][parent_col]==6 && current_row==7) ||
+									 (temp_array[parent_row][parent_col]==-6 && current_row==0 )) )   )
 							{
 
-								int a = current_col;
-								int b = current_row;
-								if(temp_array[parent_row][parent_col]==6 && current_row==0)
-								{
-
-									
-									//std::cout<<"yes"<<std::endl;
-
-										if(mouse_pos_x>(Added_width+a*80) && mouse_pos_x<(Added_width+a*80+60*0.65) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
-										{
-											temp_array[current_row][current_col]=1;
-
-										}
-										else if(mouse_pos_x>(Added_width+a*80+60*0.65) && mouse_pos_x<(Added_width+a*80+60*0.65*2) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
-										{
-											temp_array[current_row][current_col]=2;
-										}
-										else if(mouse_pos_x>(Added_width+a*80) && mouse_pos_x<(Added_width+a*80+60*0.65) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
-										{
-											temp_array[current_row][current_col]=3;
-										}
-										else if(mouse_pos_x>(Added_width+a*80+60*0.65) && mouse_pos_x<(Added_width+a*80+60*0.65*2) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
-										{
-											temp_array[current_row][current_col]=4;
-										}
-										else{}
-									temp_array[parent_row][parent_col]=0;	
-
-
-								}
-
-								if(temp_array[parent_row][parent_col]==-6 && current_row==7)
-								{
-
-								
-									//std::cout<<"yes"<<std::endl;
-
-										if(mouse_pos_x>(Added_width+a*80) && mouse_pos_x<(Added_width+a*80+60*0.65) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
-										{
-											temp_array[current_row][current_col]=-1;
-
-										}
-										else if(mouse_pos_x>(Added_width+a*80+60*0.65) && mouse_pos_x<(Added_width+a*80+60*0.65*2) && mouse_pos_y>(b*80) && mouse_pos_y<(b*80+60*0.65))
-										{
-											temp_array[current_row][current_col]=-2;
-										}
-										else if(mouse_pos_x>(Added_width+a*80) && mouse_pos_x<(Added_width+a*80+60*0.65) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
-										{
-											temp_array[current_row][current_col]=-3;
-										}
-										else if(mouse_pos_x>(Added_width+a*80+60*0.65) && mouse_pos_x<(Added_width+a*80+60*0.65*2) && mouse_pos_y>(b*80+60*0.65) && mouse_pos_y<(b*80+60*0.65*2))
-										{
-											temp_array[current_row][current_col]=-4;
-										}
-										else{}
-									temp_array[parent_row][parent_col]=0;	
-
-
-								}
+								promotion_move(temp_array,current_possible,i);
  
 							}
 							else
@@ -135,7 +79,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							
     
                             //if the move is castling:
-						int castling_row=((current_side==0) ? 7 :0);
+					    	int castling_row=((current_side!=white_up_or_down) ? 7 :0);
                             if(current_possible[i][3]==-1)
                             {
 								//to move rook only since king has already moved above:
@@ -260,11 +204,13 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 					//b_check=false;
 				}
 			
-
+			//for eg: black ko turn cha but if I click white piece, the possible path of that white piece is shown.
+			//So to prevent this following code is implemented.
+			if(my_turn==true)
+			{
 			if( (current_side==0 && game_array[current_row][current_col]<0)  //black click detected:
 				|| (current_side==1 && game_array[current_row][current_col]>0) ) //white click detected:
              {
-		
 				window.clear();
 				c1.draw_baseboard(window,square);
 
@@ -283,16 +229,134 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 			
 				 return 1; //move not successful:
 			 }
-			 else
-			  return 0;
+			  else
+			  {return 0;}
+			}
+			else //if my_turn==false:
+			{
+				window.clear();
+				c1.draw_baseboard(window,square);
+
+				if(w_check==true)
+				{
+		 		square[w_row][w_col].setFillColor(Color::Red);
+		 		window.draw(square[w_row][w_col]);
+				}
+				if(b_check==true )
+				{
+				square[b_row][b_col].setFillColor(Color::Red);
+				window.draw(square[b_row][b_col]);
+				}
+				
+				c1.set_piece_to_board(window, game_array,square, tex, sp);
+			
+				 return 1; //move not successful:
+			}
 }
 
-//possible en passant:
 
+//promotion move:
+void movement::promotion_move(int (&temp_array)[8][8],vector<vector<int>> &current_possible,int i)
+{
+	int parent_row=current_possible[0][0];
+    int parent_col=current_possible[0][1];
+	int current_row=current_possible[i][0];
+    int current_col=current_possible[i][1];
+	
+int a = current_col;
+int b = current_row;
+
+//start of if white is down and black is up:
+if(white_up_or_down==1 && black_up_or_down==0)
+{
+	if (temp_array[parent_row][parent_col] == 6 && current_row == 0) {
+
+  //std::cout<<"yes"<<std::endl;
+
+  if (mouse_pos_x > (Added_width + a * 80) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65) && mouse_pos_y > (b * 80) && mouse_pos_y < (b * 80 + 60 * 0.65)) {
+    temp_array[current_row][current_col] = 1;
+
+  } else if (mouse_pos_x > (Added_width + a * 80 + 60 * 0.65) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65 * 2) && mouse_pos_y > (b * 80) && mouse_pos_y < (b * 80 + 60 * 0.65)) {
+    temp_array[current_row][current_col] = 2;
+  } else if (mouse_pos_x > (Added_width + a * 80) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65) && mouse_pos_y > (b * 80 + 60 * 0.65) && mouse_pos_y < (b * 80 + 60 * 0.65 * 2)) {
+    temp_array[current_row][current_col] = 3;
+  } else if (mouse_pos_x > (Added_width + a * 80 + 60 * 0.65) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65 * 2) && mouse_pos_y > (b * 80 + 60 * 0.65) && mouse_pos_y < (b * 80 + 60 * 0.65 * 2)) {
+    temp_array[current_row][current_col] = 4;
+  } else {}
+  temp_array[parent_row][parent_col] = 0;
+
+}
+
+if (temp_array[parent_row][parent_col] == -6 && current_row == 7) {
+
+  //std::cout<<"yes"<<std::endl;
+
+  if (mouse_pos_x > (Added_width + a * 80) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65) && mouse_pos_y > (b * 80) && mouse_pos_y < (b * 80 + 60 * 0.65)) {
+    temp_array[current_row][current_col] = -1;
+
+  } else if (mouse_pos_x > (Added_width + a * 80 + 60 * 0.65) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65 * 2) && mouse_pos_y > (b * 80) && mouse_pos_y < (b * 80 + 60 * 0.65)) {
+    temp_array[current_row][current_col] = -2;
+  } else if (mouse_pos_x > (Added_width + a * 80) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65) && mouse_pos_y > (b * 80 + 60 * 0.65) && mouse_pos_y < (b * 80 + 60 * 0.65 * 2)) {
+    temp_array[current_row][current_col] = -3;
+  } else if (mouse_pos_x > (Added_width + a * 80 + 60 * 0.65) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65 * 2) && mouse_pos_y > (b * 80 + 60 * 0.65) && mouse_pos_y < (b * 80 + 60 * 0.65 * 2)) {
+    temp_array[current_row][current_col] = -4;
+  } else {}
+  temp_array[parent_row][parent_col] = 0;
+
+}
+}//end of if white is down and black is up:
+
+
+
+//start of if white is up and black is down:
+if(white_up_or_down==0 && black_up_or_down==1)
+{
+	if (temp_array[parent_row][parent_col] == -6 && current_row == 0) {
+
+  //std::cout<<"yes"<<std::endl;
+
+  if (mouse_pos_x > (Added_width + a * 80) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65) && mouse_pos_y > (b * 80) && mouse_pos_y < (b * 80 + 60 * 0.65)) {
+    temp_array[current_row][current_col] = -1;
+
+  } else if (mouse_pos_x > (Added_width + a * 80 + 60 * 0.65) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65 * 2) && mouse_pos_y > (b * 80) && mouse_pos_y < (b * 80 + 60 * 0.65)) {
+    temp_array[current_row][current_col] = -2;
+  } else if (mouse_pos_x > (Added_width + a * 80) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65) && mouse_pos_y > (b * 80 + 60 * 0.65) && mouse_pos_y < (b * 80 + 60 * 0.65 * 2)) {
+    temp_array[current_row][current_col] = -3;
+  } else if (mouse_pos_x > (Added_width + a * 80 + 60 * 0.65) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65 * 2) && mouse_pos_y > (b * 80 + 60 * 0.65) && mouse_pos_y < (b * 80 + 60 * 0.65 * 2)) {
+    temp_array[current_row][current_col] = -4;
+  } else {}
+  temp_array[parent_row][parent_col] = 0;
+
+}
+
+if (temp_array[parent_row][parent_col] == 6 && current_row == 7) {
+
+  //std::cout<<"yes"<<std::endl;
+
+  if (mouse_pos_x > (Added_width + a * 80) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65) && mouse_pos_y > (b * 80) && mouse_pos_y < (b * 80 + 60 * 0.65)) {
+    temp_array[current_row][current_col] = 1;
+
+  } else if (mouse_pos_x > (Added_width + a * 80 + 60 * 0.65) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65 * 2) && mouse_pos_y > (b * 80) && mouse_pos_y < (b * 80 + 60 * 0.65)) {
+    temp_array[current_row][current_col] = 2;
+  } else if (mouse_pos_x > (Added_width + a * 80) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65) && mouse_pos_y > (b * 80 + 60 * 0.65) && mouse_pos_y < (b * 80 + 60 * 0.65 * 2)) {
+    temp_array[current_row][current_col] = 3;
+  } else if (mouse_pos_x > (Added_width + a * 80 + 60 * 0.65) && mouse_pos_x < (Added_width + a * 80 + 60 * 0.65 * 2) && mouse_pos_y > (b * 80 + 60 * 0.65) && mouse_pos_y < (b * 80 + 60 * 0.65 * 2)) {
+    temp_array[current_row][current_col] = 4;
+  } else {}
+  temp_array[parent_row][parent_col] = 0;
+
+}
+}//end of if white is up and black is down:
+
+
+
+}//end of promotion move function:
+
+//possible en passant:
 void movement::possible_en_passant(int(&game_array)[8][8],vector<vector<int>> &current_possible,int moved_index)
 {
 	int row_moved=current_possible[moved_index][0];
-		int col_moved=current_possible[moved_index][1];
+	int col_moved=current_possible[moved_index][1];
 	if( (current_possible[0][0]==6 || current_possible[0][0]==1 ) &&
 		(row_moved==4 || row_moved==3) )
 	{
@@ -309,7 +373,7 @@ void movement::possible_en_passant(int(&game_array)[8][8],vector<vector<int>> &c
 
 			
 		}
-		else
+		else if(current_piece_moved==-6)
 		{
 			if(game_array[row_moved][col_moved-1]==6 || game_array[row_moved][col_moved+1]==6)
 			{
@@ -318,6 +382,10 @@ void movement::possible_en_passant(int(&game_array)[8][8],vector<vector<int>> &c
 				en_passant_possible_arr[2]=col_moved;
 			}
 		}
+		else
+		{//throw statement can be put here....
+		}
+
 		en_passant_possible_arr[3]=current_piece_moved;
 	}
 }

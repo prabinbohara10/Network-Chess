@@ -20,8 +20,22 @@ using namespace sf;
 extern vector<int> bcaptured_pieces;
 extern vector<int> wcaptured_pieces;
 
+//parent global variable:
+extern int white_up_or_down;
+extern int black_up_or_down;
+
+
+//for chess network:
+//parent global variable:
+extern bool my_turn; //used in chess network:
+					//when my_turn== ture then only I can play:
+
+
 class startmenu
 {
+private:
+	int current_side_to_play=0;//0 for white and 1 for black:
+
 public:
 
 	void mainmenu();

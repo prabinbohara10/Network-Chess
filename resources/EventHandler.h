@@ -32,9 +32,12 @@ extern int mouse_pos_y;
 
 extern int b_row,b_col,w_row,w_col;
 
+//for chess-network:
+extern bool my_turn;//for same pc it is always true:
+
 class EventHandler
 {
-	int current_side_to_play=0;//0 for white and 1 for black:
+	
     int clicked_piece;//to know clicked piece
     int row_no,col_no; //to know location of clicked piece:
     chessboard c1;
@@ -63,7 +66,7 @@ public:
 	
 
    //passing game window, game_array and base squares:
-   void event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8]);
+   void event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8],int &current_side_to_play);
 
    void gameleftsidescreen(RenderWindow &window,int x, int y);
    void gamerightsidescreen(RenderWindow &window);

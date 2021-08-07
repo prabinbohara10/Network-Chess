@@ -24,6 +24,10 @@ extern int Added_width;
 extern vector<int> bcaptured_pieces;
 extern vector<int> wcaptured_pieces;
 
+extern int white_up_or_down;
+extern int black_up_or_down;
+//for chess network:
+extern bool my_turn;
 
 extern int b_row,b_col,w_row,w_col;
 class movement
@@ -50,11 +54,14 @@ class movement
 
         int is_move_success(RenderWindow (&window),RectangleShape (&square)[8][8],int(&game_array)[8][8],
         vector<vector<int>> &current_possible,int &current_side, int current_row,int current_col);
-
+        
+        void promotion_move(int (&temp_array)[8][8],vector<vector<int>> &current_possible,int i);
         void possible_en_passant(int(&game_array)[8][8],vector<vector<int>> &current_possible,int moved_index);
         int find_check(int(&game_array)[8][8],RenderWindow (&window),RectangleShape (&square)[8][8],
           int &current_side);
         void find_captured_pieces(RenderWindow (&window),vector<vector<int>> &current_possible,
         int(&temp_array)[8][8],int i);
         void show_captured_pieces(RenderWindow (&window));
+
+    
 };

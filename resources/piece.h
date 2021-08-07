@@ -11,6 +11,9 @@ using namespace sf;
  extern int castling_possible_arr[2][3];
  extern int en_passant_possible_arr[4];
 
+ extern int white_up_or_down;
+extern int black_up_or_down;
+
 class piece
 {
  

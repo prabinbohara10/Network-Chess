@@ -4,6 +4,11 @@
 void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&square)[8][8], int row,
   int col, int piece, vector<vector<int>> &current_possible,int &current_side)
 {
+
+
+//start of if white is down and black is up:
+if(white_up_or_down==1 && black_up_or_down ==0)
+{
 	piece1.is_en_passant(square,board,current_possible,current_side,row,col);
 	if (piece == 6) //if white pawn:
 	{
@@ -61,6 +66,7 @@ void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&squ
 
 	}
 
+	//if black pawn:
 	if (piece == -6)
 	{
 		if (row == 1)
@@ -117,6 +123,129 @@ void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&squ
 
 		
 	}
+}//end of (if white is down and black is up)
+
+
+
+//start of if white is up and black is down:
+if(white_up_or_down==0 && black_up_or_down==1)
+{
+	piece1.is_en_passant(square,board,current_possible,current_side,row,col);
+	if (piece == -6) //if black pawn:
+	{
+		if (row == 6) //if white pawn is in second rank:
+		{
+			for (int i = 1;i < 3;i++)
+			{
+				if (board[row - i][col] == 0) {
+					square[row - i][col].setFillColor(Color::Cyan);
+					
+					piece1.copy_to_2dvector(square,current_possible,row-i,col,0,0);
+					window.draw(square[row - i][col]);
+				}
+				else
+					break;
+			}
+		}
+		else {
+			for (int i = 1;i < 2;i++)
+			{
+				if (board[row - i][col] == 0) {
+
+					square[row - i][col].setFillColor(Color::Cyan);
+					piece1.copy_to_2dvector(square,current_possible,row-i,col,0,0);
+					window.draw(square[row - i][col]);
+				}
+
+
+			}
+		}
+
+
+		if (board[row - 1][col - 1] > 0 || board[row - 1][col + 1] > 0) {
+			//square[row - 1][col].setFillColor(Color::Cyan);
+			//window.draw(square[row - 1][col]);
+			if (board[row - 1][col - 1] > 0 && (row - 1) >= 0 && (col - 1) >= 0)
+			{
+				square[row - 1][col - 1].setFillColor(Color::Red);
+				piece1.copy_to_2dvector(square,current_possible,row-1,col-1,1,0);
+				window.draw(square[row - 1][col - 1]);
+			}
+
+
+			if (board[row - 1][col + 1] > 0 && (row - 1) >= 0 && (col + 1) <= 7)
+			{
+				square[row - 1][col + 1].setFillColor(Color::Red);
+				piece1.copy_to_2dvector(square,current_possible,row-1,col+1,1,0);
+				window.draw(square[row - 1][col + 1]);
+
+			}
+
+
+		}
+		
+
+	}
+
+	//if white pawn:
+	if (piece == 6)
+	{
+		if (row == 1)
+		{
+			for (int i = 1;i < 3;i++)
+			{
+				if (board[row + i][col] == 0) {
+
+					square[row + i][col].setFillColor(Color::Cyan);
+					piece1.copy_to_2dvector(square,current_possible,row+i,col,0,0);
+					window.draw(square[row + i][col]);
+				}
+				else
+					break;
+
+
+
+			}
+		}
+		else {
+			for (int i = 1;i < 2;i++)
+			{
+				if (board[row + i][col] == 0) {
+
+					square[row + i][col].setFillColor(Color::Cyan);
+					piece1.copy_to_2dvector(square,current_possible,row+i,col,0,0);
+					window.draw(square[row + i][col]);
+				}
+
+
+			}
+		}
+		//for displaying replacable piece
+		if (board[row + 1][col - 1] < 0 || board[row + 1][col + 1] < 0) {
+
+			if (board[row + 1][col - 1] < 0 && (row + 1) <= 7 && (col - 1) >= 0)
+			{
+				square[row + 1][col - 1].setFillColor(Color::Red);
+				piece1.copy_to_2dvector(square,current_possible,row+1,col-1,1,0);
+				window.draw(square[row + 1][col - 1]);
+			}
+
+
+			if (board[row + 1][col + 1] < 0 && (row + 1) <= 7 && (col + 1) <= 7)
+			{
+				square[row + 1][col + 1].setFillColor(Color::Red);
+				piece1.copy_to_2dvector(square,current_possible,row+1,col+1,1,0);
+				window.draw(square[row + 1][col + 1]);
+
+			}
+			
+
+		}
+
+		
+	}
+}//end of (if white is up and black is down)
+	
 	
 	//drawing all current possible:
 		bool first=true;//to skip first since first contains the parent square:
@@ -137,6 +266,8 @@ void pawn::showpath(RenderWindow& window, int(&board)[8][8], RectangleShape(&squ
 		}
 	
 }
+
+//for promotion:
 void pawn::promotion(RenderWindow& window, int(&board)[8][8], RectangleShape(&square)[8][8], int row,
   int col, int piece, vector<vector<int>> &current_possible,int &current_side)
 {
@@ -152,7 +283,11 @@ void pawn::promotion(RenderWindow& window, int(&board)[8][8], RectangleShape(&sq
 			}
 			else
 			{
-				if(piece==6 && row==0 || piece==-6 && row==7)
+
+			//start of (if white is down and black is up)
+			 if(white_up_or_down==1 && black_up_or_down==0)
+			 {
+				 if(piece==6 && row==0 || piece==-6 && row==7)
 				{
 					if(piece==6 && row==0)
 					{
@@ -177,17 +312,6 @@ void pawn::promotion(RenderWindow& window, int(&board)[8][8], RectangleShape(&sq
 			            pqsp.setTexture(pqtex);
 						pqsp.setScale(0.65,0.65);
                         pqsp.setPosition(Added_width+col*80+60*0.65,60*0.65);	
-						//window.draw(square[row][col]);	
-
-					    window.draw(prsp);
-						window.draw(pksp);
-						window.draw(pbsp);
-						window.draw(pqsp);
-
-						//else{
-						//	window.draw(square[row][col]);
-
-						//}
 
 					}
 					if(piece==-6 && row==7)
@@ -212,15 +336,82 @@ void pawn::promotion(RenderWindow& window, int(&board)[8][8], RectangleShape(&sq
 					    pqtex.setSmooth(true);
 			            pqsp.setTexture(pqtex);
 						pqsp.setScale(0.65,0.65);
-                        pqsp.setPosition(Added_width+col*80+60*0.65,row*80+60*0.65);	
-						//window.draw(square[row][col]);	
+                        pqsp.setPosition(Added_width+col*80+60*0.65,row*80+60*0.65);		
 
-					    window.draw(prsp);
+					    
+					}
+						window.draw(prsp);
 						window.draw(pksp);
 						window.draw(pbsp);
 						window.draw(pqsp);
-					}
 				}
+			 }//end of (if white is down and black is up)
+
+
+			 //start of (if white is up and black is down)
+			 if(white_up_or_down==0 && black_up_or_down==1)
+			 {
+				 if(piece==6 && row==7 || piece==-6 && row==0)
+				{
+					if(piece==6 && row==7)
+					{
+						prtex.loadFromFile("../resources/texture/white rook.png");
+						prtex.setSmooth(true);
+			            prsp.setTexture(prtex);
+						prsp.setScale(0.65,0.65);
+                        prsp.setPosition(Added_width+col*80,row*80);
+						pktex.loadFromFile("../resources/texture/white knight.png");
+						pktex.setSmooth(true);
+			            pksp.setTexture(pktex);
+					    pksp.setScale(0.65,0.65);
+                        pksp.setPosition(Added_width+col*80+60*0.65,row*80);
+						pbtex.loadFromFile("../resources/texture/white bishop.png");
+						pbtex.setSmooth(true);
+		                pbsp.setTexture(pbtex);
+						pbsp.setScale(0.65,0.65);
+                        pbsp.setPosition(Added_width+col*80,row*80+60*0.65);
+						pqtex.loadFromFile("../resources/texture/white queen.png");
+					    pqtex.setSmooth(true);
+			            pqsp.setTexture(pqtex);
+						pqsp.setScale(0.65,0.65);
+                        pqsp.setPosition(Added_width+col*80+60*0.65,row*80+60*0.65);
+                        
+					}
+					if(piece==-6 && row==0)
+					{
+						prtex.loadFromFile("../resources/texture/black rook.png");
+						prtex.setSmooth(true);
+			            prsp.setTexture(prtex);
+						prsp.setScale(0.65,0.65);
+                        prsp.setPosition(Added_width+col*80,0);
+						pktex.loadFromFile("../resources/texture/black knight.png");
+						pktex.setSmooth(true);
+			            pksp.setTexture(pktex);
+					    pksp.setScale(0.65,0.65);
+                        pksp.setPosition(Added_width+col*80+60*0.65,0);
+						pbtex.loadFromFile("../resources/texture/black bishop.png");
+						pbtex.setSmooth(true);
+		                pbsp.setTexture(pbtex);
+						pbsp.setScale(0.65,0.65);
+                        pbsp.setPosition(Added_width+col*80,60*0.65);
+						pqtex.loadFromFile("../resources/texture/black queen.png");
+					    pqtex.setSmooth(true);
+			            pqsp.setTexture(pqtex);
+						pqsp.setScale(0.65,0.65);
+                        pqsp.setPosition(Added_width+col*80+60*0.65,60*0.65);	
+
+
+                        		
+
+					    
+					}
+						window.draw(prsp);
+						window.draw(pksp);
+						window.draw(pbsp);
+						window.draw(pqsp);
+				}
+			 }//end of (if white is up and black is down)
+				
 			
 			}
 		}

@@ -12,6 +12,9 @@ using namespace sf;
 
 extern int Added_width;
 
+extern int white_up_or_down;
+extern int black_up_or_down;
+
 class pawn
 {
 	private:
