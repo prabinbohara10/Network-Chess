@@ -195,7 +195,7 @@ while(1)
 
 	if(request_connection1==true)
 	{
-		cout<<"request_connection to 1:  ";
+		cout<<"request_connection to 1:  "<<endl;
 	packet1.clear();
 	packet1<<game_array1<<true<<0;
 	client1.send(packet1);
@@ -205,7 +205,7 @@ while(1)
 
 	if(request_connection2==true)
 	{
-		cout<<"request_connection to 2:  ";
+		cout<<"request_connection to 2:  "<<endl;
 	packet2.clear();
 	packet2<<game_array2<<true<<1;
 	client2.send(packet2);
@@ -226,7 +226,7 @@ while(1)
 
 	if(response_connection1==true)
     {
-		cout<<"response_connection from 1:  ";
+		cout<<"response_connection from 1:  "<<endl;
 	    packet1.clear();
         client1.receive(packet1);
         packet1>>game_array1;
@@ -245,7 +245,7 @@ while(1)
 	
 	if(response_connection2==true)
     {
-		cout<<"response_connection from 2:  ";
+		cout<<"response_connection from 2:  "<<endl;
 	    packet2.clear();
         client2.receive(packet2);
         packet2>>game_array2;

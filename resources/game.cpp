@@ -165,6 +165,7 @@ void game::network_game(int a)
 
 		if(request_connection==true)
 	   {
+		   cout<<"request_connection received: "<<endl;
 		std:: cout<<"connection";
 	    packet1.clear();
         socket.receive(packet1);
@@ -177,6 +178,7 @@ void game::network_game(int a)
 
 		if(time_to_send_sever==true)
 		{
+			cout<<"time_tosend_sever invoked: "<<endl;
 		response_connection=true;
 		time_to_send_sever=false;
 		my_turn=false;
@@ -190,6 +192,7 @@ void game::network_game(int a)
 
 		if(response_connection==true)
 		{
+			cout<<"response_connection sent: "<<endl;
 		packet1.clear();
 		packet1<<game_array;
 		socket.send(packet1);
