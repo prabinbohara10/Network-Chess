@@ -111,6 +111,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 
 							
 							//checks if there is check or not for current move:
+							//move successful:
 							int abc=find_check(temp_array,window,square,current_side);
 							if(!abc)
 							{
@@ -168,7 +169,9 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 
 								c1.set_piece_to_board(window, game_array,square, tex, sp);
 								current_side=!current_side; //to switch current side to play:
-							
+								
+								time_to_send_sever=true;	
+								cout<<time_to_send_sever;
 								return 1;
 							}
 							
@@ -568,13 +571,8 @@ int movement :: find_check(int(&game_array1)[8][8],RenderWindow (&window),Rectan
 	window.clear();
 	c1.draw_baseboard(window,square);
 	
-
-
-
-
 	if(current_side==0 && w_check==true ){
 		b_check=false;
-		
 		return 1;
 	}
 	else if(current_side==1 && b_check==true){

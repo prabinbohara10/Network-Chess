@@ -5,7 +5,7 @@
 #include <iostream>
 #include<vector>
 
-#include"piece.h"
+#include "piece.h"
 
 using namespace std;
 using namespace sf;

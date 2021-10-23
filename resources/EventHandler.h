@@ -15,6 +15,7 @@
 #include"movement.h"
 #include"startmenu.h"
 
+
 using namespace sf;
 
 
@@ -34,6 +35,7 @@ extern int b_row,b_col,w_row,w_col;
 
 //for chess-network:
 extern bool my_turn;//for same pc it is always true:
+extern bool time_to_send_sever; 
 
 class EventHandler
 {

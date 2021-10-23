@@ -57,6 +57,7 @@
 				gamerightsidescreen(window);
 				movement1.show_captured_pieces(window);
 				window.display();
+				
 			 return;
 			}
 

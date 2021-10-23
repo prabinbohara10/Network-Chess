@@ -1,5 +1,4 @@
 #include "startmenu.h"
-
 //initializing the global variable:
 int white_up_or_down=0; //if down side of board then 1:
 int black_up_or_down=1; //if upper side of board then 0 :
@@ -152,9 +151,11 @@ void startmenu::connection(int x, int y, RenderWindow& menu)
 	if (splay.getGlobalBounds().contains(x, y))
 	{
 		//cout << "play" << endl;
+
+		game game1;
 		menu.close();
-		main_game();
-       // game game2;
+        
+	    game1.main_game(5);
        // game2.gamescreen();
 		
          //window.close();
@@ -163,6 +164,9 @@ void startmenu::connection(int x, int y, RenderWindow& menu)
 	{
 		//cout << "play" << endl;
 		menu.close();
+		game game2;
+		game2.network_game(5);
+
     
 		
         
@@ -170,84 +174,3 @@ void startmenu::connection(int x, int y, RenderWindow& menu)
 		
 }
 
-void startmenu::main_game()
-{
-
-	
-	// int game_array[8][8] = {
-	//   { -1,-2,-3,-4,-5,-3,-2,-1 },
-	//   { -6,-6,-6,-6,-6,-6,-6,-6 },
-	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
-	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
-	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
-	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
-	//   {  6, 6, 6, 6, 6, 6, 6, 6 },
-	//   {  1, 2, 3, 4, 5, 3, 2, 1 }
-	// };
-
-	int game_array[8][8] = {
-	  { 1,2,3,4,5,3,2,1 },
-	  { 6,6,6,6,6,6,6,6 },
-	  {  0, 0, 0, 0, 0, 0, 0, 0 },
-	  {  0, 0, 0, 0, 0, 0, 0, 0 },
-	  {  0, 0, 0, 0, 0, 0, 0, 0 },
-	  {  0, 0, 0, 0, 0, 0, 0, 0 },
-	  {  -6, -6, -6, -6, -6, -6, -6, -6 },
-	  {  -1, -2, -3, -4, -5, -3, -2, -1 }
-	};
-
-	// int game_array[8][8]={
-	//   { -1,-2,-3,-4,-5,-3,0,-1 },
-	//   { -6,6,-6,-6,-6,-6,6,-6 },
-	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
-	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
-	//   {  0, 0, -6, 4, 0, 0, 0, 0},
-	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
-	//   {  -1, -6, 0, 0, 6, 0,-6, 6 },
-	//   {  1, 0, 3, 4, 5, 0, 0, 1 }
-	// };
-
-	RectangleShape square[8][8];   //for board
-	Texture tex;       //for pieces img
-	Sprite sp;         //for displaying those images
-
-
-	RenderWindow window(VideoMode(Added_width+800, 640), "THE BOARD", Style::Close | Style::Titlebar);
-	window.setFramerateLimit(60); 
-
-	
-
-	chessboard chessboard1;
-	
-
-	//initial clear:
-	window.clear();
-	
-	//initial drawing the board in starting position:
-	chessboard1.draw_baseboard(window, square);
-	chessboard1.set_piece_to_board(window, game_array,square, tex, sp);
-
-	//for handling events: EventHandler class
-	EventHandler eventhandler1;
-	eventhandler1.gameleftsidescreen(window,0,0);
-	eventhandler1.gamerightsidescreen(window);
-	//display the initial postion board:
-	window.display();
-
-
-	//initilizing other variables:
-	
-	
-
-	//main game loop:
-	while (window.isOpen()) {
-		
-		//Event handler section:
-		
-		eventhandler1.event_function(window,game_array,square,current_side_to_play);
-
-		
-
-	}
-
-}

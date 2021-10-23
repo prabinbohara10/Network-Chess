@@ -22,14 +22,18 @@ if (status != sf::Socket::Done)
     std::cout<<"Connection failed, status: "<<status<<endl;
     //std::cout<<"COnnection failed, status: "<<WSAGetLastError()<<std::endl;
     std::cout << "Connection failed" << endl;
-            socket.disconnect();
+            //socket.disconnect();
             return 1;
 }
 
 sf::Packet p1;
 sf::Uint16 x;
+
+socket.receive(p1);
+p1>>x;
 	
-    cout<<buffer;
+    cout<<x;
+    cin>>x;
 //socket.receive(p1);
 
 //p1>>x;

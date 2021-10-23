@@ -7,6 +7,8 @@
 
 #include"chessboard.h"
 
+
+
 using namespace std;
 
 using namespace sf;
@@ -28,6 +30,8 @@ extern int white_up_or_down;
 extern int black_up_or_down;
 //for chess network:
 extern bool my_turn;
+extern bool time_to_send_sever; 
+
 
 extern int b_row,b_col,w_row,w_col;
 class movement
