@@ -1,7 +1,7 @@
 #include "startmenu.h"
 //initializing the global variable:
-int white_up_or_down=0; //if down side of board then 1:
-int black_up_or_down=1; //if upper side of board then 0 :
+int white_up_or_down=1; //if down side of board then 1:
+int black_up_or_down=0; //if upper side of board then 0 :
 bool my_turn=true;
 
 

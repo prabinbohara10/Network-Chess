@@ -70,7 +70,8 @@ public:
 
    //passing game window, game_array and base squares:
    void event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8],int &current_side_to_play);
-
+   void function_after_getting_position(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8],int &current_side_to_play,
+   int x,int y);
 
    void gameleftsidescreen(RenderWindow &window,int x, int y);
    void gamerightsidescreen(RenderWindow &window);

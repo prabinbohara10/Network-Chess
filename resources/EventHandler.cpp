@@ -24,19 +24,32 @@
 		   if(event1.type==Event::MouseButtonPressed && event1.mouseButton.button==Mouse::Left || (to_trigger_event==true))
 		   {
 			int x,y;
-            if(to_trigger_event==true)
-			{
-				x=0;
-				y=0;
-			}
-			else
-			{
+            
 			//getting x and y when mouse is clicked:
 			x = Mouse::getPosition(window).x;
 			y = Mouse::getPosition(window).y;
-			}
-			mouse_pos_x = x;
+			
+			function_after_getting_position(window,game_array,square,current_side_to_play,x,y);
+			
+			
+
+			
+			
+			
+
+
+
+		}//MouseButtonPressed() function
+	   }//window polled event1
+   }//void forMouseClicked() function:
+
+ void EventHandler:: function_after_getting_position(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8],
+  int &current_side_to_play,int x, int y)
+ {
+            mouse_pos_x = x;
 			mouse_pos_y = y;
+			cout<<"x= "<<x<<endl;
+			cout<<"y= "<<y<<endl;
 			
 			//condition is only triggered when clicked within the chess board:
 			if (x >= 0 && x <= 800 && y >= 0 && y <= 640) //if inside the board??
@@ -165,18 +178,8 @@
 				
 
 			}//if inside the board??
-			
 
-			
-			
-			
-
-
-
-		}//MouseButtonPressed() function
-	   }//window polled event1
-   }//void forMouseClicked() function:
-
+ }//end of function:
 
 void EventHandler:: gameleftsidescreen(RenderWindow &window,int x, int y)
 {

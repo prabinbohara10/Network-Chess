@@ -28,27 +28,27 @@ sf::Packet& operator >>(sf::Packet& packet, int(&arr)[8][8])
 
 void game::main_game(int a)
 {
-	// int game_array[8][8] = {
-	//   { -1,-2,-3,-4,-5,-3,-2,-1 },
-	//   { -6,-6,-6,-6,-6,-6,-6,-6 },
-	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
-	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
-	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
-	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
-	//   {  6, 6, 6, 6, 6, 6, 6, 6 },
-	//   {  1, 2, 3, 4, 5, 3, 2, 1 }
-	// };
-
 	int game_array[8][8] = {
-	  { 1,2,3,4,5,3,2,1 },
-	  { 6,6,6,6,6,6,6,6 },
+	  { -1,-2,-3,-4,-5,-3,-2,-1 },
+	  { -6,-6,-6,-6,-6,-6,-6,-6 },
 	  {  0, 0, 0, 0, 0, 0, 0, 0 },
 	  {  0, 0, 0, 0, 0, 0, 0, 0 },
 	  {  0, 0, 0, 0, 0, 0, 0, 0 },
 	  {  0, 0, 0, 0, 0, 0, 0, 0 },
-	  {  -6, -6, -6, -6, -6, -6, -6, -6 },
-	  {  -1, -2, -3, -4, -5, -3, -2, -1 }
+	  {  6, 6, 6, 6, 6, 6, 6, 6 },
+	  {  1, 2, 3, 4, 5, 3, 2, 1 }
 	};
+
+	// int game_array[8][8] = {
+	//   { 1,2,3,4,5,3,2,1 },
+	//   { 6,6,6,6,6,6,6,6 },
+	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
+	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
+	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
+	//   {  0, 0, 0, 0, 0, 0, 0, 0 },
+	//   {  -6, -6, -6, -6, -6, -6, -6, -6 },
+	//   {  -1, -2, -3, -4, -5, -3, -2, -1 }
+	// };
 
 	// int game_array[8][8]={
 	//   { -1,-2,-3,-4,-5,-3,0,-1 },
@@ -154,7 +154,7 @@ void game::network_game(int a)
 	//main game loop:
 	while (window.isOpen()) 
 	{
-		to_trigger_event=false;
+		
 
 	    packet1.clear();
         socket.receive(packet1);
@@ -170,7 +170,8 @@ void game::network_game(int a)
 	    packet1.clear();
         socket.receive(packet1);
         packet1>>game_array>>my_turn>>current_side_to_play;
-		to_trigger_event=true;
+		EventHandler eventhandler1;
+		eventhandler1.function_after_getting_position(window,game_array,square,current_side_to_play,11,12);
         packet1.clear();  
         request_connection=false;
 		std:: cout<<"end";
