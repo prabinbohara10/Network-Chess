@@ -1,6 +1,7 @@
 #include"game.h"
 
 bool time_to_send_sever=false; 
+bool to_trigger_event=false;
 //operator overloading for passing packet in array:
 sf::Packet& operator <<(sf::Packet& packet, const int(&arr)[8][8])
 {
@@ -153,6 +154,8 @@ void game::network_game(int a)
 	//main game loop:
 	while (window.isOpen()) 
 	{
+		to_trigger_event=false;
+
 	    packet1.clear();
         socket.receive(packet1);
         packet1>>request_connection;
@@ -162,11 +165,14 @@ void game::network_game(int a)
 
 		if(request_connection==true)
 	   {
+		std:: cout<<"connection";
 	    packet1.clear();
         socket.receive(packet1);
         packet1>>game_array>>my_turn>>current_side_to_play;
+		to_trigger_event=true;
         packet1.clear();  
         request_connection=false;
+		std:: cout<<"end";
 	   }
 
 		if(time_to_send_sever==true)

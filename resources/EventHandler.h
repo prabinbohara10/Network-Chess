@@ -36,6 +36,7 @@ extern int b_row,b_col,w_row,w_col;
 //for chess-network:
 extern bool my_turn;//for same pc it is always true:
 extern bool time_to_send_sever; 
+extern bool to_trigger_event;
 
 class EventHandler
 {
@@ -69,6 +70,7 @@ public:
 
    //passing game window, game_array and base squares:
    void event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8],int &current_side_to_play);
+
 
    void gameleftsidescreen(RenderWindow &window,int x, int y);
    void gamerightsidescreen(RenderWindow &window);

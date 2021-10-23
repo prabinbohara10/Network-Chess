@@ -33,6 +33,7 @@ extern bool my_turn; //used in chess network:
 					//when my_turn== ture then only I can play:
 
 extern bool time_to_send_sever; 
+extern bool to_trigger_event;
 
 
 class game

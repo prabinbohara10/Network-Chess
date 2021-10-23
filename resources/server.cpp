@@ -179,6 +179,7 @@ bool request_connection1=true;
 bool request_connection2=false;
 bool response_connection1;
 bool response_connection2;
+
 while(1)
 {
 	packet1.clear();
@@ -186,8 +187,15 @@ while(1)
 	client1.send(packet1);
 	packet1.clear();
 
+	packet2.clear();
+	packet2<<request_connection2;
+	client2.send(packet2);
+	packet2.clear();
+
+
 	if(request_connection1==true)
 	{
+		cout<<"request_connection to 1:  ";
 	packet1.clear();
 	packet1<<game_array1<<true<<0;
 	client1.send(packet1);
@@ -195,15 +203,9 @@ while(1)
 	request_connection1=false;
 	}
 
-
-	packet2.clear();
-	packet2<<request_connection2;
-	client2.send(packet2);
-	packet2.clear();
-
-
 	if(request_connection2==true)
 	{
+		cout<<"request_connection to 2:  ";
 	packet2.clear();
 	packet2<<game_array2<<true<<1;
 	client2.send(packet2);
@@ -211,17 +213,20 @@ while(1)
 	request_connection2=false;
 	}
 
-
-
-
-		//receiving mode:
+	//receiving mode:
 	packet1.clear();
     client1.receive(packet1);
     packet1>>response_connection1;
     packet1.clear();  
 
+	packet2.clear();
+    client2.receive(packet2);
+    packet2>>response_connection2;
+    packet2.clear(); 
+
 	if(response_connection1==true)
     {
+		cout<<"response_connection from 1:  ";
 	    packet1.clear();
         client1.receive(packet1);
         packet1>>game_array1;
@@ -230,16 +235,17 @@ while(1)
 		reverse_array(game_array2,game_array1);
 		request_connection2=true;
 	}
-	packet2.clear();
-    client2.receive(packet2);
-    packet2>>response_connection2;
-    packet2.clear();  
+
+	
+	
+ 
 	
 	
 
 	
 	if(response_connection2==true)
     {
+		cout<<"response_connection from 2:  ";
 	    packet2.clear();
         client2.receive(packet2);
         packet2>>game_array2;

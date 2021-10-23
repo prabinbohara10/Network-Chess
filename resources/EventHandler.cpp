@@ -3,12 +3,13 @@
    void EventHandler:: event_function(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8],int &current_side_to_play)
    {
 	   
+	   
 	   //checking special cases i.e. special movements:
 			// 1)castling  2)En passant 3)Check  4)Checkmate  5)
       
 
 		//any event is triggered:
-	    while (window.pollEvent(event1)) {
+	    while (window.pollEvent(event1)|| (to_trigger_event==true)) {
 
 		   //checking window close event both by mouse click and keyboard press:
 		   	if (event1.type == Event::Closed)
@@ -20,13 +21,20 @@
 			 
 
 		   //mouse pressed event start:
-		   if(event1.type==Event::MouseButtonPressed && event1.mouseButton.button==Mouse::Left)
+		   if(event1.type==Event::MouseButtonPressed && event1.mouseButton.button==Mouse::Left || (to_trigger_event==true))
 		   {
-			
-            
+			int x,y;
+            if(to_trigger_event==true)
+			{
+				x=0;
+				y=0;
+			}
+			else
+			{
 			//getting x and y when mouse is clicked:
-			int x = Mouse::getPosition(window).x;
-			int y = Mouse::getPosition(window).y;
+			x = Mouse::getPosition(window).x;
+			y = Mouse::getPosition(window).y;
+			}
 			mouse_pos_x = x;
 			mouse_pos_y = y;
 			
