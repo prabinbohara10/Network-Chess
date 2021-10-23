@@ -178,7 +178,7 @@ void game::network_game(int a)
 
 		if(time_to_send_sever==true)
 		{
-			cout<<"time_tosend_sever invoked: "<<endl;
+		cout<<"time_tosend_sever invoked: "<<endl;
 		response_connection=true;
 		time_to_send_sever=false;
 		my_turn=false;

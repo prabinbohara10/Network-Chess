@@ -9,7 +9,7 @@
       
 
 		//any event is triggered:
-	    while (window.pollEvent(event1)|| (to_trigger_event==true)) {
+	    while (window.pollEvent(event1)) {
 
 		   //checking window close event both by mouse click and keyboard press:
 		   	if (event1.type == Event::Closed)
