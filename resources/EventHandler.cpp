@@ -64,6 +64,10 @@
 				clicked_piece = game_array[row_no][col_no];
 			
 				}
+				else
+				{
+					clicked_piece=0;
+				}
 				
 
 
