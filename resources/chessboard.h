@@ -3,6 +3,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <iostream>
+
+
 using namespace sf;
 
 extern int Added_width;

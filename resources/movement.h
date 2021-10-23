@@ -5,7 +5,9 @@
 #include <iostream>
 #include<vector>
 
-#include"chessboard.h"
+#include "chessboard.h"
+#include "check.h"
+
 
 
 

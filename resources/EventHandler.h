@@ -38,6 +38,8 @@ extern bool my_turn;//for same pc it is always true:
 extern bool time_to_send_sever; 
 extern bool to_trigger_event;
 
+
+
 class EventHandler
 {
 	
@@ -51,7 +53,7 @@ class EventHandler
 	queen q1;
 	king k1;
     
-	movement movement1;
+	
 	Texture tex;//to display pieces:
 	Sprite sp;
 

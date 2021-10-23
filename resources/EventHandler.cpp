@@ -24,6 +24,7 @@
 		   if(event1.type==Event::MouseButtonPressed && event1.mouseButton.button==Mouse::Left || (to_trigger_event==true))
 		   {
 			int x,y;
+			//std::cout<<"event hai "<<endl;
             
 			//getting x and y when mouse is clicked:
 			x = Mouse::getPosition(window).x;
@@ -74,6 +75,7 @@
 			
 
 			//if move is successful:
+			movement movement1;
 			int move_flag= movement1.is_move_success(window,square,game_array,current_possible,current_side_to_play,row_no, col_no);
 			if(move_flag)
 			{

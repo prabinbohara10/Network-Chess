@@ -165,8 +165,7 @@ void game::network_game(int a)
 
 		if(request_connection==true)
 	   {
-		   cout<<"request_connection received: "<<endl;
-		std:: cout<<"connection";
+		//cout<<"request_connection received: "<<endl;
 	    packet1.clear();
         socket.receive(packet1);
         packet1>>game_array>>my_turn>>current_side_to_play;
@@ -174,12 +173,12 @@ void game::network_game(int a)
 		eventhandler1.function_after_getting_position(window,game_array,square,current_side_to_play,11,12);
         packet1.clear();  
         request_connection=false;
-		std:: cout<<"end";
+		
 	   }
 
 		if(time_to_send_sever==true)
 		{
-		cout<<"time_tosend_sever invoked: "<<endl;
+		//cout<<"time_tosend_sever invoked: "<<endl;
 		response_connection=true;
 		time_to_send_sever=false;
 		my_turn=false;
@@ -193,7 +192,7 @@ void game::network_game(int a)
 
 		if(response_connection==true)
 		{
-			cout<<"response_connection sent: "<<endl;
+			//cout<<"response_connection sent: "<<endl;
 		packet1.clear();
 		packet1<<game_array;
 		socket.send(packet1);

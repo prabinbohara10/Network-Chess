@@ -38,11 +38,13 @@ void movement::copy_2d_array(int (&destination_arr)[8][8],int (&src_arr)[8][8])
 int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8][8],int(&game_array)[8][8],
         vector<vector<int>> &current_possible, int &current_side,int current_row,int current_col)
 {
+	std::cout<<" value of current_possible : "<<endl;
     //to check if the clicked_square is present in the current_possible vector:
 			if(current_possible.size()>1)
 			{
 				for(int i=1;i<current_possible.size();i++)
 				{
+					//std::cout<<" value of current_possible : "<<i<<endl;
 				  if(current_possible[i][0]==current_row && current_possible[i][1]==current_col)
 					{
 						king_position(game_array,king_pos);
@@ -96,7 +98,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
                             else {}
 
 							//if the move is en passant:
-							if(current_possible[i][3]==2)
+							if( (current_possible[i][3]==2)|| (current_possible[i][3]==-2))
 							{
 								int row=current_possible[0][0];
 								int col=current_col;
@@ -168,10 +170,14 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 								}
 
 								c1.set_piece_to_board(window, game_array,square, tex, sp);
+								
 								current_side=!current_side; //to switch current side to play:
 								
 								time_to_send_sever=true;	
 								cout<<time_to_send_sever;
+								check check1;
+								cout<<"here";
+								bool ans=check1.isCheckmate2(game_array,current_side);
 								return 1;
 							}
 							

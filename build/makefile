@@ -1,6 +1,7 @@
 COMPILER=g++ 
 
 BISHOP=../resources/bishop.cpp
+CHECK=../resources/check.cpp
 CHESSBOARD=../resources/chessboard.cpp
 EVENTHANDLER=../resources/eventhandler.cpp
 GAME=../resources/game.cpp
@@ -24,10 +25,10 @@ all:compile link compile1 link1 compile2 link2
 
 
 compile:
-	$(COMPILER) -I ../src/include -c $(BISHOP) $(CHESSBOARD) $(EVENTHANDLER) $(GAME) $(KING) $(KNIGHT) $(MAIN) $(MOVEMENT) $(PAWN) $(PIECE) $(QUEEN) $(ROOK) $(STARTMENU)
+	$(COMPILER) -I ../src/include -c $(BISHOP) $(CHECK) $(CHESSBOARD) $(EVENTHANDLER) $(GAME) $(KING) $(KNIGHT) $(MAIN) $(MOVEMENT) $(PAWN) $(PIECE) $(QUEEN) $(ROOK) $(STARTMENU)
 
 link:
-	$(COMPILER) bishop.o chessboard.o eventhandler.o game.o king.o knight.o main.o movement.o pawn.o piece.o queen.o rook.o startmenu.o -o main -L ../src/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
+	$(COMPILER) bishop.o check.o chessboard.o eventhandler.o game.o king.o knight.o main.o movement.o pawn.o piece.o queen.o rook.o startmenu.o -o main -L ../src/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
 
 
 
