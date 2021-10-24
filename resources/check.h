@@ -87,5 +87,7 @@ public:
         void find_captured_pieces2(RenderWindow (&window),vector<vector<int>> &current_possible,
         int(&temp_array)[8][8],int i);
         void show_captured_pieces2(RenderWindow (&window));
+
+		void game_over_window();
 };
 

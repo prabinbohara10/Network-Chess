@@ -518,3 +518,44 @@ int check :: find_check2(int(&game_array1)[8][8],RenderWindow (&window),Rectangl
 
 } //ending of this function 
 
+
+
+void check::game_over_window()
+{
+	cout<<"hhhhh";
+	RenderWindow window(VideoMode(Added_width+800, 640), "THE BOARD", Style::Close | Style::Titlebar);
+	window.setFramerateLimit(60);
+
+	CircleShape shape(5.f);
+
+	Texture background,play,exit,option,menu1,bplay,boption,bexit;
+	Sprite sbackground, splay, soption, sexit,smenu1,sbplay,sboption,sbexit;
+	window.clear();
+	 menu1.loadFromFile("../resources/menu/game_over.png");
+	menu1.setSmooth("true");
+	smenu1.setTexture(menu1);
+	smenu1.setPosition(640 / 2 - smenu1.getGlobalBounds().width/2, 20);
+    smenu1.setScale(0.75, 0.75);
+	
+	window.draw(shape);
+	window.draw(smenu1);
+	window.display();
+
+	
+
+	while (window.isOpen())
+	{
+		Event ev;
+		while (window.pollEvent(ev))
+		{
+			if (ev.type == Event::Closed)
+				window.close();
+			if (ev.type == Event::KeyPressed && ev.key.code == Keyboard::Escape)
+				window.close();
+			if (ev.type == Event::MouseButtonPressed && ev.mouseButton.button == Mouse::Left)
+			{
+			}
+
+		}
+	}
+}//end of function:

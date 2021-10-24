@@ -177,7 +177,14 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 								//cout<<time_to_send_sever;
 								check check1;
 								//cout<<"here is no check";
-								//bool ans=check1.isCheckmate2(game_array,current_side);
+								bool ans=check1.isCheckmate2(game_array,current_side);
+								if(ans==true)
+								{
+								//window.close();
+								check check2;
+								check2.game_over_window();
+								 
+								}
 								return 1;
 							}
 							
