@@ -36,7 +36,7 @@ void reverse_array(int (&temp_array)[8][8], int (&game_array)[8][8])
 	for(int i=0;i<8;i++)
 	{
 		for(int j=0;j<8;j++)
-		  {  temp_array[i][j]=game_array[7-i][j];  }
+		  {  temp_array[i][j]=game_array[7-i][7-j];  }
 	}
 	
 	

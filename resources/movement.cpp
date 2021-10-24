@@ -37,8 +37,7 @@ void movement::copy_2d_array(int (&destination_arr)[8][8],int (&src_arr)[8][8])
 
 int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8][8],int(&game_array)[8][8],
         vector<vector<int>> &current_possible, int &current_side,int current_row,int current_col)
-{
-	std::cout<<" value of current_possible : "<<endl;
+{	king_position(game_array,king_pos);
     //to check if the clicked_square is present in the current_possible vector:
 			if(current_possible.size()>1)
 			{
@@ -115,6 +114,7 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 							//checks if there is check or not for current move:
 							//move successful:
 							int abc=find_check(temp_array,window,square,current_side);
+							cout<<"king check status : "<<abc<<endl;
 							if(!abc)
 							{
 								if( (current_possible[0][2]==1)
@@ -174,10 +174,10 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 								current_side=!current_side; //to switch current side to play:
 								
 								time_to_send_sever=true;	
-								cout<<time_to_send_sever;
+								//cout<<time_to_send_sever;
 								check check1;
-								cout<<"here";
-								bool ans=check1.isCheckmate2(game_array,current_side);
+								//cout<<"here is no check";
+								//bool ans=check1.isCheckmate2(game_array,current_side);
 								return 1;
 							}
 							
@@ -191,28 +191,15 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 			//to remove all elemets of vector 
 			 //	:either it finds possible moves or not:
 			current_possible.clear();
+
 			w_row=king_pos[0][0];
 			w_col=king_pos[0][1];
 			b_row=king_pos[1][0];
 			b_col=king_pos[1][1];
 
-			    if(current_side==0 && w_check==true)
-				{
-					//w_check=false;
-				// 	if((w_row+w_col)%2==0)
-				// 		square[w_row][w_col].setFillColor(Color::White);
-				// 	else 
-				// 	square[w_row][w_col].setFillColor(Color::Black);
-				
-				// window.draw(square[w_row][w_col]);
-				
-					
-				}
-				if(current_side==1 && b_check==true )
-				{
-					//b_check=false;
-				}
-			
+			//cout<<"king_pos[1][0] : "<<king_pos[1][0]<<endl;
+
+			    
 			//for eg: black ko turn cha but if I click white piece, the possible path of that white piece is shown.
 			//So to prevent this following code is implemented.
 			if(my_turn==true)

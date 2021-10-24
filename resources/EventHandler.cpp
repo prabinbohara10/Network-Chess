@@ -31,7 +31,9 @@
 			y = Mouse::getPosition(window).y;
 			
 			function_after_getting_position(window,game_array,square,current_side_to_play,x,y);
-			
+
+		
+
 			
 
 			
@@ -49,8 +51,8 @@
  {
             mouse_pos_x = x;
 			mouse_pos_y = y;
-			cout<<"x= "<<x<<endl;
-			cout<<"y= "<<y<<endl;
+			//cout<<"x= "<<x<<endl;
+			//cout<<"y= "<<y<<endl;
 			
 			//condition is only triggered when clicked within the chess board:
 			if (x >= 0 && x <= 800 && y >= 0 && y <= 640) //if inside the board??
@@ -157,18 +159,28 @@
 				// placing pieces to the board. making baseboard is already done before.
 				//Why making baseboard function is above?
 				//just to draw different colours to the squares of possible moves:
+				cout<<endl;
 					if(b_check==true)
 					{
-						cout<<"2 ";
+					// cout<<" :2 black_check true: "<<endl;
+					// cout<<" b_row = "<<b_row;
+					// cout<<" b_col = "<<b_col<<endl;
 					square[b_row][b_col].setFillColor(Color::Red);
 					window.draw(square[b_row][b_col]);
+					//cout<<" :2 black_check true: end hai: ";
 					}
 					else if(w_check==true)
 					{
+						//cout<<" :3 white_check true: ";
 		 			square[w_row][w_col].setFillColor(Color::Red);
 		 			window.draw(square[w_row][w_col]);
+					// cout<<" :3 white_check true: end hai: ";
 					}
-					else{}
+					else{
+					//	cout<<" :inside else: "<<endl;
+					}
+					//cout<<" :after outside else: "<<endl;
+
 
 				c1.set_piece_to_board(window, game_array,square, tex, sp);
 				p1.promotion(window, game_array, square, row_no, col_no, clicked_piece,current_possible,current_side_to_play);
@@ -181,9 +193,9 @@
 			}//end of if (checking if white moves in white turn and black in black turn)
 		}//end of if(if my_turn==true)
 
-				
+	}//if inside the board??
 
-			}//if inside the board??
+
 
  }//end of function:
 
