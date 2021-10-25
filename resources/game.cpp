@@ -1,5 +1,6 @@
 #include"game.h"
 
+int who_won=555;//white won=1;blackwon=2;
 bool time_to_send_sever=false; 
 bool to_trigger_event=false;
 //operator overloading for passing packet in array:
@@ -67,6 +68,10 @@ void game::main_game(int a)
 
 
 	RenderWindow window(VideoMode(Added_width+800, 640), "THE BOARD", Style::Close | Style::Titlebar);
+	//window.setPosition(sf::Vector2i(10, 10));
+	window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width/2-400,
+                                  sf::VideoMode::getDesktopMode().height / 2 -360));
+
 	window.setFramerateLimit(60); 
 
 	chessboard chessboard1;
@@ -158,8 +163,10 @@ void game::network_game(int a)
 
 	    packet1.clear();
         socket.receive(packet1);
-        packet1>>request_connection;
+        packet1>>request_connection>>who_won;
         packet1.clear();  
+
+		
 
 		
 
@@ -169,9 +176,22 @@ void game::network_game(int a)
 	    packet1.clear();
         socket.receive(packet1);
         packet1>>game_array>>my_turn>>current_side_to_play;
+		if((who_won==1)||(who_won==2))
+		{
+
+		
+
+		socket.disconnect();
+		window.close();
+		check check1;
+		check1.game_over_window();
+		
+
+		}
 		EventHandler eventhandler1;
 		eventhandler1.function_after_getting_position(window,game_array,square,current_side_to_play,11,12);
-        packet1.clear();  
+		
+		packet1.clear();  
         request_connection=false;
 		
 	   }
@@ -185,7 +205,7 @@ void game::network_game(int a)
 		}
 
 		packet1.clear();
-		packet1<<response_connection;
+		packet1<<response_connection<<who_won;
 		socket.send(packet1);
 		packet1.clear();
 	  
@@ -210,6 +230,10 @@ void game::network_game(int a)
 		//cout<<"3 :";
 		
 		eventhandler1.event_function(window,game_array,square,current_side_to_play);
+
+		
+
+		
 
 		}//end of while loop: "window.isOpen()":
 

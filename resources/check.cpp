@@ -1,5 +1,6 @@
 #include"check.h"
 
+
 bool check::isCheckmate2(int game_arr[8][8],int current_side_to_play)
 {
 	int temp_arr[8][8];
@@ -27,7 +28,7 @@ bool check::isCheckmate2(int game_arr[8][8],int current_side_to_play)
             int selected_piece=game_array[i][j];
 			std::cout<<"selected piece : "<<selected_piece<<endl;
 
-		 if((current_side_to_play==0 && selected_piece>=0) || (current_side_to_play==1 && selected_piece<=0))
+		 if((current_side_to_play==0 && selected_piece>0) || (current_side_to_play==1 && selected_piece<0))
 		  {
 			
 			//push clicked row, column and clicked piece to 0th index of current_possible:
@@ -76,7 +77,7 @@ bool check::isCheckmate2(int game_arr[8][8],int current_side_to_play)
 					int current_col=current_possible[i][1];
 					check check1;
 					int move_flag= check1.is_move_success2(window,square,game_array,current_possible,current_side_to_play,
-							current_row, current_row);
+							current_row, current_col);
 					
 					if(move_flag==101) //successful move
 					{
@@ -522,24 +523,30 @@ int check :: find_check2(int(&game_array1)[8][8],RenderWindow (&window),Rectangl
 
 void check::game_over_window()
 {
-	cout<<"hhhhh";
+	//cout<<"hhhhh";
 	RenderWindow window(VideoMode(Added_width+800, 640), "THE BOARD", Style::Close | Style::Titlebar);
 	window.setFramerateLimit(60);
 
-	CircleShape shape(5.f);
+	
 
 	Texture background,play,exit,option,menu1,bplay,boption,bexit;
 	Sprite sbackground, splay, soption, sexit,smenu1,sbplay,sboption,sbexit;
 	window.clear();
-	 menu1.loadFromFile("../resources/menu/game_over.png");
+
+	menu1.loadFromFile("../resources/menu/game_over.png");
 	menu1.setSmooth("true");
 	smenu1.setTexture(menu1);
 	smenu1.setPosition(640 / 2 - smenu1.getGlobalBounds().width/2, 20);
     smenu1.setScale(0.75, 0.75);
+	play.loadFromFile("../resources/menu/play.png");
+	play.setSmooth("true");
+	splay.setTexture(play);
+	splay.setPosition(640 / 2 - splay.getGlobalBounds().width/2, 100);
+    splay.setScale(0.75, 0.75);
 	
-	window.draw(shape);
+	
 	window.draw(smenu1);
-	window.display();
+	
 
 	
 
@@ -556,6 +563,32 @@ void check::game_over_window()
 			{
 			}
 
+			if (ev.type == Event::MouseButtonPressed && ev.mouseButton.button == Mouse::Left)
+			{
+				int x = Mouse::getPosition(window).x;
+				int y = Mouse::getPosition(window).y;
+				if (x >= 0 && x <= 640 && y >= 0 && y <= 400)
+				{
+					//connection(x, y,menu);
+					if (splay.getGlobalBounds().contains(x, y))
+					{
+						game game1;
+						window.close();
+    					game1.main_game(5);
+					}
+				}
+			}
+
+			
+
 		}
+	int mousepos_x = Mouse::getPosition(window).x;
+	int mousepos_y= Mouse::getPosition(window).y;
+	if(splay.getGlobalBounds().contains(mousepos_x,mousepos_y))
+    {	
+        window.draw(sbplay);
+
+    }
+	
 	}
 }//end of function:

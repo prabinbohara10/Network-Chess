@@ -3,6 +3,7 @@
 bool w_check=false;
 bool b_check=false;
 
+
 int b_row=-1,b_col=-1,w_row=-1,w_col=-1;
 
 void movement::king_position(int (&game_array1)[8][8],int (&king_pos)[2][2])
@@ -180,9 +181,20 @@ int movement::is_move_success(RenderWindow (&window),RectangleShape (&square)[8]
 								bool ans=check1.isCheckmate2(game_array,current_side);
 								if(ans==true)
 								{
-								//window.close();
-								check check2;
-								check2.game_over_window();
+									if(current_side==0)
+									{
+										who_won=2;	//black wins
+									}
+									
+									else if(current_side==1)
+									{
+										who_won=1;	//white wins:
+									}
+									else
+									{}
+									// //check check2;
+									// //check2.game_over_window();
+								
 								 
 								}
 								return 1;

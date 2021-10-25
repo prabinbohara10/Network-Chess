@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include<vector>
 
@@ -14,6 +15,7 @@
 #include "knight.h"
 #include"movement.h"
 #include"startmenu.h"
+#include "check.h"
 
 
 using namespace sf;
@@ -32,12 +34,17 @@ extern int mouse_pos_x;
 extern int mouse_pos_y;
 
 extern int b_row,b_col,w_row,w_col;
+extern SoundBuffer click,hoover,move;
+extern Sound click1,hoover1,move1;
 
+
+extern int white_up_or_down;
+extern int black_up_or_down;
 //for chess-network:
 extern bool my_turn;//for same pc it is always true:
 extern bool time_to_send_sever; 
 extern bool to_trigger_event;
-
+extern int who_won;
 
 
 class EventHandler
@@ -60,6 +67,8 @@ class EventHandler
 	vector<vector<int>> current_possible;//to store the information of all possible moves of particular piece:
 	
     Event event1;
+    Texture testback1,menu2,bmenu2;//to display back button:
+	Sprite stestback1,smenu2,sbmenu2;
 	 
 
 
@@ -77,7 +86,7 @@ public:
 
    void gameleftsidescreen(RenderWindow &window,int x, int y);
    void gamerightsidescreen(RenderWindow &window);
-
+   void moveplay();
    
     
 

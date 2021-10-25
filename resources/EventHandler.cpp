@@ -49,7 +49,50 @@
  void EventHandler:: function_after_getting_position(RenderWindow &window,int (&game_array)[8][8],RectangleShape (&square)[8][8],
   int &current_side_to_play,int x, int y)
  {
-            mouse_pos_x = x;
+	 cout<<"after event :"<<endl;
+        //    if((white_up_or_down==1)&&(who_won==1))
+		// {
+		// 	//window.close();
+		// 	check check2;
+		// 	check2.game_over_window();
+		// }
+		
+		// if((white_up_or_down==0)&&(who_won==2))
+		// {
+		// 	//window.close();
+		// 	check check2;
+		// 	check2.game_over_window();
+		// }
+		// if((white_up_or_down==0)&&(who_won==1))
+		// {
+		// 	//window.close();
+		// 	check check2;
+		// 	check2.game_over_window();
+		// }
+								// check check1;
+
+								// bool ans=check1.isCheckmate2(game_array,current_side_to_play);
+								// if(ans==false)
+								// {
+								// 	if(current_side_to_play==0)
+								// 	{
+								// 		who_won=2;	//black wins
+								// 	}
+									
+								// 	if(current_side_to_play==1)
+								// 	{
+								// 		who_won=1;	//white wins:
+								// 	}
+								// 	else
+								// 	{}
+								// 	window.close();
+								// 	check check2;
+								// 	check2.game_over_window();
+								
+								 
+								// }
+		   
+		    mouse_pos_x = x;
 			mouse_pos_y = y;
 			//cout<<"x= "<<x<<endl;
 			//cout<<"y= "<<y<<endl;
@@ -85,6 +128,8 @@
 				gameleftsidescreen(window, mouse_pos_x,mouse_pos_y);
 				gamerightsidescreen(window);
 				movement1.show_captured_pieces(window);
+				moveplay();
+
 				window.display();
 				
 			 return;
@@ -101,6 +146,7 @@
 			
 			
 				window.clear();//reset everything by clering window to make different colour for possible moves:
+				
 				
 				c1.draw_baseboard(window,square);//making baseboard so that other color can fit above this baseboard.
 												 //This has initial color black and white.
@@ -187,6 +233,8 @@
 				gameleftsidescreen(window, mouse_pos_x,mouse_pos_y);
 				gamerightsidescreen(window);
 				movement1.show_captured_pieces(window);
+				startmenu startmenu2;
+				startmenu2.clickplay();
 
 			    window.display();
 			//else part of "if clicked is on same square:"
@@ -202,50 +250,43 @@
 void EventHandler:: gameleftsidescreen(RenderWindow &window,int x, int y)
 {
     
-    Texture background1,menu2,bmenu2;
-	Sprite sbackground1,smenu2,sbmenu2;
-	//background1.loadFromFile("../resources/menu/background2.jpg");
-	//background1.setSmooth("true");
+	testback1.loadFromFile("../resources/menu/testback.jpg",IntRect(0, 0, 160, 640));
+	testback1.setSmooth("true");
+	stestback1.setTexture(testback1);
+	window.draw(stestback1);
 	
-	//sbackground1.setTexture(background1);
-	
-	//sp3.setScale(0.5, 0.5);
-	//sbackground1.setPosition(0,0);
-	menu2.loadFromFile("../resources/menu/menu.png");
+	menu2.loadFromFile("../resources/menu/back.png");
 	menu2.setSmooth("true");
 	smenu2.setTexture(menu2);
-	smenu2.setScale(0.75, 0.75);
+	smenu2.setScale(1.00, 1.00);
 	smenu2.setPosition(4, 640-smenu2.getGlobalBounds().height-4);
-    //bmenu2.loadFromFile("../resources/menu/menubig.png");
-	//bmenu2.setSmooth("true");
-	//sbmenu2.setTexture(bmenu2);
-	//sbmenu2.setScale(0.75,0.75);
-	//sbmenu2.setPosition(window.getSize().x - sbmenu2.getGlobalBounds().width, window.getSize().y - sbmenu2.getGlobalBounds().height);
     
-    if(smenu2.getGlobalBounds().contains(x,y))
-			{
-				
-				//startmenu startmenu2;
-				//startmenu2.mainmenu();
-			}
+	bmenu2.loadFromFile("../resources/menu/bback.png");
+	bmenu2.setSmooth("true");
+	sbmenu2.setTexture(bmenu2);
+	sbmenu2.setScale(1.00,1.00);
+	sbmenu2.setPosition(4, 640-smenu2.getGlobalBounds().height-4);
+	
     int mousepos_x = Mouse::getPosition(window).x;
 	int mousepos_y = Mouse::getPosition(window).y;
-    window.draw(sbackground1);
-    if (smenu2.getGlobalBounds().contains(mousepos_x,mousepos_y))
-    {
-        smenu2.setScale(0.9, 0.9);
-        window.draw(smenu2);
-		window.display();
-		window.close();
-		startmenu startmenu1;
-		startmenu1.mainmenu();
+    if (smenu2.getGlobalBounds().contains(Mouse::getPosition(window).x,Mouse::getPosition(window).y))
+		{
+			window.draw(sbmenu2);
+			//window.display();
 
-    }
-    if (!smenu2.getGlobalBounds().contains(mousepos_x,mousepos_y))
-    {
+
+		}
+		if (!smenu2.getGlobalBounds().contains(Mouse::getPosition(window).x,Mouse::getPosition(window).y))
+        {
         
         window.draw(smenu2);
-    }
+   		 }
+	if (smenu2.getGlobalBounds().contains(mousepos_x,mousepos_y))
+	{
+			window.close();
+		    startmenu startmenu1;
+		    startmenu1.mainmenu();
+	}
 }
 
 
@@ -262,11 +303,33 @@ void EventHandler:: gamerightsidescreen(RenderWindow &window)
 	//rec1.setSize(Vector2f(160,160));
 	//rec1.setFillColor(Color::Yellow);
 	//rec1.setPosition(0,0);
-	rec2.setSize(Vector2f(160,160));
-	rec2.setFillColor(Color::Yellow);
-	rec2.setPosition(Added_width+640,480);
-	window.draw(sp);
-	window.draw(rec2);
+	rec2.setSize(Vector2f(160,640));
+	rec2.setFillColor(Color::Cyan);
+	rec2.setPosition(Added_width+640,0);
+	//window.draw(sp);
+	//window.draw(rec2);
+
+	Texture testback;
+	Sprite stestback;
+
+
+	testback.loadFromFile("../resources/menu/testback.jpg",IntRect(0,0, 160, 640));
+
+	testback.setSmooth("true");
+	stestback.setTexture(testback);
+	stestback.setPosition(800,0);
+	window.draw(stestback);
 
 }
 
+void EventHandler::moveplay()
+{
+	if(is_sound==true)
+	{
+		move1.play();
+
+	}
+
+
+
+}

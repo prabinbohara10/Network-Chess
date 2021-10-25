@@ -3,6 +3,8 @@
 //comment
 void chessboard::set_piece_to_board(RenderWindow& window,int (&board)[8][8],RectangleShape(&square)[8][8],Texture& tex,Sprite& sp)
 {
+
+
 	for (int i = 0; i < row; i++)
 	{
 		for (int j = 0; j < col; j++)

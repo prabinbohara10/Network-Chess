@@ -13,6 +13,7 @@
 #include "king.h"
 #include "knight.h"
 #include "EventHandler.h"
+#include"check.h"
 
 
 
@@ -34,6 +35,8 @@ extern bool my_turn; //used in chess network:
 
 extern bool time_to_send_sever; 
 extern bool to_trigger_event;
+
+extern int who_won;//white won=1;blackwon=2;
 
 
 class game

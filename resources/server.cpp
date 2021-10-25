@@ -179,16 +179,16 @@ bool request_connection1=true;
 bool request_connection2=false;
 bool response_connection1;
 bool response_connection2;
-
+int who_won=555;
 while(1)
 {
 	packet1.clear();
-	packet1<<request_connection1;
+	packet1<<request_connection1<<who_won;
 	client1.send(packet1);
 	packet1.clear();
 
 	packet2.clear();
-	packet2<<request_connection2;
+	packet2<<request_connection2<<who_won;
 	client2.send(packet2);
 	packet2.clear();
 
@@ -216,12 +216,12 @@ while(1)
 	//receiving mode:
 	packet1.clear();
     client1.receive(packet1);
-    packet1>>response_connection1;
+    packet1>>response_connection1>>who_won;
     packet1.clear();  
 
 	packet2.clear();
     client2.receive(packet2);
-    packet2>>response_connection2;
+    packet2>>response_connection2>>who_won;
     packet2.clear(); 
 
 	if(response_connection1==true)

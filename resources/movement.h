@@ -33,6 +33,7 @@ extern int black_up_or_down;
 //for chess network:
 extern bool my_turn;
 extern bool time_to_send_sever; 
+extern int who_won;//white won=1;blackwon=2;
 
 
 extern int b_row,b_col,w_row,w_col;

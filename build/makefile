@@ -28,7 +28,7 @@ compile:
 	$(COMPILER) -I ../src/include -c $(BISHOP) $(CHECK) $(CHESSBOARD) $(EVENTHANDLER) $(GAME) $(KING) $(KNIGHT) $(MAIN) $(MOVEMENT) $(PAWN) $(PIECE) $(QUEEN) $(ROOK) $(STARTMENU)
 
 link:
-	$(COMPILER) bishop.o check.o chessboard.o eventhandler.o game.o king.o knight.o main.o movement.o pawn.o piece.o queen.o rook.o startmenu.o -o main -L ../src/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
+	$(COMPILER) bishop.o check.o chessboard.o eventhandler.o game.o king.o knight.o main.o movement.o pawn.o piece.o queen.o rook.o startmenu.o -o main -L ../src/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network -lsfml-audio
 
 
 
@@ -37,11 +37,11 @@ compile1:
 	$(COMPILER) -I ../src/include -c $(client)
 
 link1:
-	$(COMPILER) client.o -o client -L ../src/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
+	$(COMPILER) client.o -o client -L ../src/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network -lsfml-audio
 
 compile2:
 	$(COMPILER) -I ../src/include -c $(server)
 
 link2:
-	$(COMPILER) server.o -o server -L ../src/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
+	$(COMPILER) server.o -o server -L ../src/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network -lsfml-audio
 
